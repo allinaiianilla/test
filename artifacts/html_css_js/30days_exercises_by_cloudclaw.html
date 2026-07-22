@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML/CSS/JS 30天练习题 — CloudClaw</title>
+<style>
+:root {
+  --html: #e74c3c;
+  --css: #3498db;
+  --js: #f39c12;
+  --dark: #2c3e50;
+  --white: #fff;
+  --light: #f8f9fa;
+  --shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7;padding:20px}
+.container{max-width:900px;margin:0 auto}
+
+h1{text-align:center;font-size:2em;margin-bottom:4px}
+h1 span.html{color:var(--html)} h1 span.css{color:var(--css)} h1 span.js{color:var(--js)}
+.subtitle{text-align:center;color:#95a5a6;margin-bottom:30px}
+
+.phase{margin-bottom:32px}
+.phase h2{font-size:1.3em;padding:12px 20px;border-radius:8px 8px 0 0;color:white}
+.phase.html h2{background:var(--html)}
+.phase.css h2{background:var(--css)}
+.phase.js h2{background:var(--js)}
+.phase.all h2{background:linear-gradient(135deg,var(--html),var(--css),var(--js))}
+
+.day{background:white;border-radius:0 0 8px 8px;box-shadow:var(--shadow);padding:0}
+.day+.day{border-top:1px solid #eee}
+.day summary{padding:14px 20px;cursor:pointer;font-weight:600;font-size:1.05em;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.day summary:hover{background:var(--light)}
+.day summary .tag{font-size:.8em;padding:3px 10px;border-radius:12px;color:white;font-weight:400}
+.tag.html{background:var(--html)} .tag.css{background:var(--css)} .tag.js{background:var(--js)}
+
+.day .content{padding:0 20px 16px}
+.day .content h4{color:var(--dark);margin:12px 0 6px;font-size:1em}
+.day .content ol{padding-left:20px}
+.day .content li{margin-bottom:6px}
+.day .content code{background:#2c3e50;color:#ecf0f1;padding:2px 7px;border-radius:4px;font-family:"Fira Code","JetBrains Mono",monospace;font-size:.9em}
+
+footer{text-align:center;color:#95a5a6;margin-top:40px;padding:20px;font-size:.9em}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1><span class="html">HTML</span> · <span class="css">CSS</span> · <span class="js">JavaScript</span></h1>
+<p class="subtitle">30 天每日训练题 — 只做最重要的 | by CloudClaw 🦞</p>
+
+<!-- ========== Phase 1: HTML (Day 1-8) ========== -->
+<div class="phase html">
+<h2>📄 阶段一：HTML 骨架 (Day 1-8)</h2>
+
+<details class="day"><summary>Day 1：搭建第一个网页 <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>在桌面新建一个 <code>.html</code> 文件，写入 <code>&lt;!DOCTYPE html&gt;</code>、<code>&lt;html&gt;</code>、<code>&lt;head&gt;</code>、<code>&lt;body&gt;</code> 骨架，用浏览器打开</li>
+  <li>在 <code>&lt;title&gt;</code> 里设置网页标题为"我的第一个网页"</li>
+  <li>在 <code>&lt;body&gt;</code> 里写一行 <code>&lt;h1&gt;Hello World&lt;/h1&gt;</code></li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>再加一个 <code>&lt;p&gt;</code> 段落，写一句介绍自己的话</li>
+  <li>在段落里用 <code>&lt;br&gt;</code> 换行</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 2：文本标签 <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>写出 h1 到 h6 六个标题，观察字体大小差异</li>
+  <li>写一段话，用 <code>&lt;strong&gt;</code> 加粗关键词，用 <code>&lt;em&gt;</code> 斜体关键词</li>
+  <li>写一个无序列表 <code>&lt;ul&gt;</code>，列出你的三个爱好</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>写一个有序列表 <code>&lt;ol&gt;</code>，列出做菜的步骤（3步）</li>
+  <li>嵌套列表：一个大分类下有小分类</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 3：链接与图片 <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 <code>&lt;a href="..."&gt;</code> 创建跳转到百度的超链接</li>
+  <li>用 <code>&lt;a href="..." target="_blank"&gt;</code> 创建新窗口打开的超链接</li>
+  <li>用 <code>&lt;img src="..."&gt;</code> 插入一张网络图片</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>制作一个导航栏：用链接写出"首页 | 关于 | 联系"</li>
+  <li>给图片加 <code>alt</code> 属性，图片加载失败时显示替代文字</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 4：div 与 span <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 <code>&lt;div&gt;</code> 包裹一个标题和一个段落，观察块级特性</li>
+  <li>在一段文字中用 <code>&lt;span&gt;</code> 包裹几个字</li>
+  <li>写 3 个 <code>&lt;div&gt;</code> 并排放置（先不管样式，观察默认行为）</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>给 div 加上 <code>style="background:#eee; padding:10px; margin:5px"</code> 观察效果</li>
+  <li>理解块级 vs 行内：div 会换行，span 不换行</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 5：表格 <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>创建一个 3 行 3 列的表格（<code>&lt;table&gt;</code>/<code>&lt;tr&gt;</code>/<code>&lt;td&gt;</code>）</li>
+  <li>给表格加表头 <code>&lt;th&gt;</code></li>
+  <li>用 <code>border="1"</code> 给表格加边框</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一张课程表（星期/课程名/时间）</li>
+  <li>用 <code>colspan</code> 合并两个单元格</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 6：表单基础 <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 <code>&lt;form&gt;</code> 包裹创建一个文本输入框 <code>&lt;input type="text"&gt;</code></li>
+  <li>创建一个密码输入框 <code>&lt;input type="password"&gt;</code></li>
+  <li>创建一个提交按钮 <code>&lt;button type="submit"&gt;</code></li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>创建一个登录表单（用户+密码+登录按钮）</li>
+  <li>加一个复选框 <code>&lt;input type="checkbox"&gt;</code> "记住我"</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 7：多媒体与语义标签 <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 <code>&lt;audio controls&gt;</code> 嵌入一个音频文件链接</li>
+  <li>用 <code>&lt;video controls&gt;</code> 嵌入一个视频</li>
+  <li>用 <code>&lt;iframe&gt;</code> 嵌入一个B站视频</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>了解语义化标签：<code>&lt;header&gt;</code>/<code>&lt;main&gt;</code>/<code>&lt;footer&gt;</code>/<code>&lt;nav&gt;</code>/<code>&lt;article&gt;</code></li>
+  <li>用这些语义标签重新组织一个新闻页面</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 8：HTML 综合挑战 <span class="tag html">HTML</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>做一张个人名片：头像图片 + 姓名(h2) + 简介(p) + 联系方式列表</li>
+  <li>加入导航链接：GitHub / 博客 / 邮箱</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一份 HTML 简历：个人信息、教育经历(table)、技能列表(ul)、项目经验</li>
+  <li>所有标签语义化，不使用 div 堆砌</li>
+</ol></div></details>
+</div>
+
+<!-- ========== Phase 2: CSS (Day 9-18) ========== -->
+<div class="phase css">
+<h2>🎨 阶段二：CSS 样式 (Day 9-18)</h2>
+
+<details class="day"><summary>Day 9：CSS 入门 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用三种方式写 CSS 给 h1 变红色：内联 style / &lt;style&gt; 标签 / 外部 .css 文件</li>
+  <li>用类选择器 <code>.box { }</code> 给 div 加背景色</li>
+  <li>用 ID 选择器 <code>#main { }</code> 给元素加边框</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>写一个子代选择器 <code>.card > h2</code>，只选中直接子元素</li>
+  <li>写一个悬停效果 <code>button:hover</code> 改变背景色</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 10：盒模型 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>创建一个 div，分别设置 width、height、padding、border、margin</li>
+  <li>用 Chrome 开发者工具（F12）查看盒模型</li>
+  <li>理解 <code>box-sizing: border-box</code> 的含义并应用</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>创建 3 个并排的卡片，用 margin 控制间距</li>
+  <li>用 padding 让卡片内的文字不贴边</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 11：颜色、字体、背景 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 color/background-color 给文字和背景上色（用 #hex、rgb()、直接颜色名三种方式）</li>
+  <li>设置 font-size 和 font-weight，观察效果</li>
+  <li>用 text-align: center 居中对齐文字</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>用 background-image 设置全屏背景图</li>
+  <li>用 font-family 设置中英文混排字体栈</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 12：阴影、圆角、渐变 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>给卡片加 box-shadow（提升质感的关键）</li>
+  <li>用 border-radius 做圆角卡片（>10px）</li>
+  <li>用 border-radius: 50% 做圆形头像</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>写一个 linear-gradient 渐变背景按钮</li>
+  <li>给文字加 text-shadow 阴影效果</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 13：Flexbox 上 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>创建一个 flex 容器，放 3 个子 div</li>
+  <li>用 justify-content: center / space-between / space-around 三种对齐</li>
+  <li>用 align-items: center 垂直居中</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个导航栏：logo 在左，菜单在右（justify-content: space-between）</li>
+  <li>用 flex-wrap: wrap 做自适应卡片布局</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 14：Flexbox 下 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 flex-direction: column 做垂直排列</li>
+  <li>用 flex: 1 让子元素等分剩余空间</li>
+  <li>用 gap 控制子元素间距（比 margin 更优雅）</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个圣杯布局（header / 三列内容 / footer）</li>
+  <li>做一个居中对齐的登录框（水平+垂直都居中）</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 15：Grid 上 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>创建一个 Grid 容器，grid-template-columns: repeat(3, 1fr)</li>
+  <li>用 grid-template-rows 设置行高</li>
+  <li>用 gap 设置网格间距</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个 3×3 的图片画廊</li>
+  <li>用 grid-column: span 2 让某个元素跨两列</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 16：响应式设计 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 <code>@media (max-width: 768px) { }</code> 写移动端样式</li>
+  <li>设置 viewport meta 标签</li>
+  <li>用相对单位 rem / % / vw 代替 px</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个两栏布局：桌面端并排，手机端上下堆叠</li>
+  <li>用 clamp() 函数做自适应字号</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 17：过渡与动画 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>给按钮加 transition: background 0.3s，hover 时变色</li>
+  <li>用 transform: scale(1.05) 做悬停放大效果</li>
+  <li>写一个简单的 @keyframes 淡入动画</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个 loading 旋转动画（@keyframes spin）</li>
+  <li>给卡片加 hover 上浮效果（translateY + shadow）</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 18：CSS 综合挑战 <span class="tag css">CSS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>把 Day 8 的个人名片用 CSS 美化（加阴影/圆角/渐变/间距）</li>
+  <li>用 Flexbox/Grid 重新布局名片</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个产品展示卡片（图片+标题+价格+购买按钮），Hover 有动效</li>
+  <li>整套卡片在桌面端 3 列、平板 2 列、手机 1 列</li>
+</ol></div></details>
+</div>
+
+<!-- ========== Phase 3: JavaScript (Day 19-28) ========== -->
+<div class="phase js">
+<h2>⚡ 阶段三：JavaScript 交互 (Day 19-28)</h2>
+
+<details class="day"><summary>Day 19：变量、类型、运算符 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 let 声明变量 name/age，用 const 声明 PI</li>
+  <li>用 typeof 查看不同类型值</li>
+  <li>练习算术运算符 + - * / %</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>用模板字符串 `` `Hello ${name}` `` 拼接</li>
+  <li>区分 == 和 === 的区别（写代码验证）</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 20：条件与循环 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>写一个 if/else 判断分数等级</li>
+  <li>用三元运算符 <code>score >= 60 ? "通过" : "不通过"</code></li>
+  <li>用 for 循环打印 1-10</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>写 for...of 遍历数组</li>
+  <li>用 while 循环做一个猜数字游戏（浏览器控制台）</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 21：数组操作 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>创建数组，用 push/pop 增删元素</li>
+  <li>用 .map() 把 [1,2,3] 变成 [2,4,6]</li>
+  <li>用 .filter() 过滤出偶数</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>用 .reduce() 求数组总和</li>
+  <li>用 .find() 查找第一个符合条件的元素</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 22：函数 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 function 关键字写普通函数</li>
+  <li>用箭头函数重写 <code>const add = (a,b) => a+b</code></li>
+  <li>练习带默认参数的函数</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>写一个高阶函数：接收一个函数作为参数</li>
+  <li>理解 callback 回调函数的概念</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 23：对象 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>创建一个 user 对象（name/age/email）</li>
+  <li>用点语法和方括号语法访问属性</li>
+  <li>用 Object.keys() 遍历对象的键</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>写解构赋值 <code>const {name, age} = user</code></li>
+  <li>写展开运算符 <code>const newUser = {...user, city: "北京"}</code></li>
+</ol></div></details>
+
+<details class="day"><summary>Day 24：DOM 操作上 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 querySelector 选中页面元素</li>
+  <li>用 textContent 修改元素文字</li>
+  <li>用 innerHTML 插入 HTML 内容</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>用 querySelectorAll 选中多个元素并遍历</li>
+  <li>用 createElement + appendChild 动态创建元素</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 25：DOM 操作下 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 classList.add / remove / toggle 切换样式</li>
+  <li>用 style.xxx 直接修改元素样式</li>
+  <li>用 remove() 删除元素</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个点击切换暗黑模式（body.classList.toggle("dark")）</li>
+  <li>用 setAttribute / getAttribute 操作属性</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 26：事件处理 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 addEventListener("click", fn) 监听按钮点击</li>
+  <li>监听 input 事件，实时显示输入内容</li>
+  <li>用 event.preventDefault() 阻止表单默认提交</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个待办事项(Todo List)：输入框+添加按钮+列表显示</li>
+  <li>用事件委托让动态添加的元素也能响应点击</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 27：异步与 fetch <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>用 setTimeout 延迟执行代码</li>
+  <li>用 setInterval 每秒打印一次时间</li>
+  <li>用 fetch 请求 https://api.github.com 并 console.log</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>用 async/await 改写 fetch 请求</li>
+  <li>处理 fetch 的异常（try/catch）</li>
+</ol></div></details>
+
+<details class="day"><summary>Day 28：JS 综合挑战 <span class="tag js">JS</span></summary><div class="content">
+<h4>🍎 基础题</h4><ol>
+  <li>做一个计数器（+1/-1/重置按钮）</li>
+  <li>做一个随机名言生成器（数组存名言，点击按钮随机显示）</li>
+</ol>
+<h4>🔥 进阶题</h4><ol>
+  <li>做一个简单的图片轮播（3 张图，上一张/下一张）</li>
+  <li>做一个搜索过滤功能（输入文字，实时过滤列表）</li>
+</ol></div></details>
+</div>
+
+<!-- ========== Phase 4: 项目实战 (Day 29-30) ========== -->
+<div class="phase all">
+<h2>🚀 阶段四：项目实战 (Day 29-30)</h2>
+
+<details class="day"><summary>Day 29：完整项目 — 个人主页 <span class="tag html">HTML</span><span class="tag css">CSS</span><span class="tag js">JS</span></summary><div class="content">
+<h4>🎯 目标：做一个能上线的个人主页</h4><ol>
+  <li><strong>HTML：</strong>头部导航(首页/关于/项目/联系) + 个人介绍区 + 技能列表 + 项目卡片</li>
+  <li><strong>CSS：</strong>Flexbox 布局 + 卡片阴影 + 渐变背景 + 响应式（手机端菜单折叠）</li>
+  <li><strong>JS：</strong>导航栏滚动变色 + 点击滚动到对应区域 + 打字机效果</li>
+</ol>
+</div></details>
+
+<details class="day"><summary>Day 30：完整项目 — 天气查询应用 <span class="tag html">HTML</span><span class="tag css">CSS</span><span class="tag js">JS</span></summary><div class="content">
+<h4>🎯 目标：HTML+CSS+JS 全栈小应用</h4><ol>
+  <li><strong>HTML：</strong>搜索框 + 城市名显示 + 温度/天气图标 + 湿度/风速</li>
+  <li><strong>CSS：</strong>居中卡片 + 渐变背景 + 天气图标动画</li>
+  <li><strong>JS：</strong>输入城市 → 调用天气 API → 用 DOM 更新页面 → 错误处理</li>
+  <li><strong>Bonus：</strong>用 localStorage 保存搜索历史</li>
+</ol>
+</div></details>
+</div>
+
+<footer>
+  🦞 30天 HTML/CSS/JS 练习题 by CloudClaw — 每天动手 30 分钟，30 天成为前端入门选手！
+</footer>
+
+</div>
+</body>
+</html>
