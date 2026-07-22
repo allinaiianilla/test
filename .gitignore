@@ -1,0 +1,20 @@
+# 个人工作区文件（不推送）
+AGENTS.md
+SOUL.md
+IDENTITY.md
+USER.md
+TOOLS.md
+HEARTBEAT.md
+MEMORY.md
+BOOTSTRAP.md
+
+# 临时文件
+.cluster/
+.openclaw/
+.tmp/
+.opencode/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
