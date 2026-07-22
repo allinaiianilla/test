@@ -1,38 +1,87 @@
 from config import SYSTEM_PROMPT
 from client import chat
 from logger import ChatLogger
-from renderer import show,console
+from renderer import show, console
 from commands import HELP
 
-logger=ChatLogger()
-messages=[{"role":"system","content":SYSTEM_PROMPT}]
-console.print("[green]AI Chat 已启动[/green]")
+logger = ChatLogger()
+
+messages = [
+    {
+        "role": "system",
+        "content": SYSTEM_PROMPT
+    }
+]
+
+console.print("[bold green]AI Chat 已启动[/bold green]")
+console.print("[cyan]输入 /help 查看帮助[/cyan]")
+
 while True:
+
     try:
-        q=input("\n你> ").strip()
+        question = input("\n你 > ").strip()
+
     except KeyboardInterrupt:
-        print("\nBye~")
+        print("\n\nBye~")
         break
-    if not q: continue
-    if q=="/exit": break
-    if q=="/help":
-        print(HELP);continue
-    if q=="/clear":
-        messages=[{"role":"system","content":SYSTEM_PROMPT}]
-        print("上下文已清空");continue
-    if q=="/save":
-        print("聊天已自动保存。");continue
-    messages.append({"role":"user","content":q});logger.append("User",q)
-    stream,obj=chat(messages)
-    if stream:
-        text=""
-        print("AI> ",end="",flush=True)
-        for c in obj:
-            d=c.choices[0].delta.content
-            if d:
-                print(d,end="",flush=True);text+=d
-        print()
-    else:
-        text=obj.choices[0].message.content
-        show(text)
-    messages.append({"role":"assistant","content":text});logger.append("Assistant",text)
+
+    if not question:
+        continue
+
+    # -----------------------
+    # 命令
+    # -----------------------
+
+    if question == "/exit":
+        break
+
+    if question == "/help":
+        print(HELP)
+        continue
+
+    if question == "/clear":
+        messages = [
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            }
+        ]
+        console.print("[yellow]上下文已清空[/yellow]")
+        continue
+
+    if question == "/save":
+        console.print("[green]聊天记录始终自动保存。[/green]")
+        continue
+
+    # -----------------------
+    # 用户消息
+    # -----------------------
+
+    messages.append(
+        {
+            "role": "user",
+            "content": question
+        }
+    )
+
+    logger.append("User", question)
+
+    # -----------------------
+    # AI
+    # -----------------------
+
+    answer, stream = chat(messages)
+
+    if not stream:
+        show(answer)
+
+    messages.append(
+        {
+            "role": "assistant",
+            "content": answer
+        }
+    )
+
+    logger.append("Assistant", answer)
+
+print("\n聊天结束。")
