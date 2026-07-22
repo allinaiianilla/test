@@ -5,6 +5,7 @@ from openai import OpenAI
 from rich.console import Console
 from rich.markdown import Markdown
 from config import *
+
 console=Console()
 client=OpenAI(api_key=API_KEY,base_url=BASE_URL,http_client=httpx.Client(trust_env=False))
 history=Path("history");history.mkdir(exist_ok=True)
