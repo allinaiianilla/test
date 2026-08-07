@@ -1,0 +1,10 @@
+# PyCode CLI — 依赖
+
+# 核心功能使用 Python 标准库，以下为可选的增强依赖
+
+# LLM 客户端（可选，核心用 urllib 标准库实现）
+# openai>=1.0      # 如果用 OpenAI 官方 SDK
+
+# 高级功能（可选）
+# rich>=13.0       # 更美观的终端输出
+# prompt_toolkit   # 更好的交互体验

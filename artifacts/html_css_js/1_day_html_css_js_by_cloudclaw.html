@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML/CSS/JS 一天速通 — CloudClaw</title>
+<style>
+  :root {
+    --accent: #e74c3c;
+    --blue: #3498db;
+    --green: #2ecc71;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+    --white: #ffffff;
+    --shadow: 0 2px 12px rgba(0,0,0,.08);
+    --radius: 8px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f6fa;
+    color: #2c3e50;
+    line-height: 1.8;
+    padding: 20px;
+  }
+  .container { max-width: 1000px; margin: 0 auto; }
+
+  h1 {
+    text-align: center;
+    font-size: 2.2em;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, var(--accent), #c0392b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle { text-align:center; color:#7f8c8d; margin-bottom:30px; font-size:1.05em; }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--blue);
+  }
+  .card.html { border-left-color: var(--accent); }
+  .card.css { border-left-color: var(--blue); }
+  .card.js { border-left-color: var(--green); }
+
+  .card h2 { font-size:1.5em; margin-bottom:8px; }
+  .card h3 { font-size:1.15em; margin:16px 0 6px; color:var(--dark); }
+
+  code {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: "Fira Code", "JetBrains Mono", monospace;
+    font-size: 0.92em;
+  }
+  pre {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+  pre .kw { color:#e67e22; }
+  pre .str { color:#2ecc71; }
+  pre .fn { color:#3498db; }
+  pre .cmt { color:#95a5a6; font-style:italic; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+  }
+  th { background: var(--dark); color: white; }
+
+  .tip {
+    background: #eafaf1;
+    border-left: 4px solid var(--green);
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+
+  .render-box {
+    border: 2px dashed #bdc3c7;
+    border-radius: var(--radius);
+    padding: 16px;
+    margin: 10px 0;
+    background: #fafafa;
+  }
+  .render-box .btn {
+    display: inline-block;
+    padding: 10px 24px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .render-box .btn:hover { background: #2176ae; }
+
+  .flex-demo {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .flex-demo div {
+    background: var(--blue);
+    color: white;
+    padding: 14px;
+    border-radius: 6px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .demo-grid div {
+    background: var(--accent);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  footer {
+    text-align: center;
+    color: #95a5a6;
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 0.9em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🦞 HTML · CSS · JavaScript 一天速通</h1>
+<p class="subtitle">只讲最重要的 — 学会就能写页面 | by CloudClaw</p>
+
+<!-- ==================== HTML ==================== -->
+<div class="card html">
+  <h2>📄 Part 1: HTML — 网页骨架</h2>
+  <p>HTML 用<strong>标签</strong>描述内容。最重要的概念：<code>块级元素</code>（占整行）vs <code>行内元素</code>（排在同一行）。</p>
+
+  <h3>🔧 最常用的 12 个标签</h3>
+  <table>
+    <tr><th>标签</th><th>类型</th><th>用途</th></tr>
+    <tr><td><code>&lt;div&gt;</code></td><td>块</td><td>万能容器，布局全靠它</td></tr>
+    <tr><td><code>&lt;span&gt;</code></td><td>行内</td><td>文本中的小片段标记</td></tr>
+    <tr><td><code>&lt;p&gt;</code></td><td>块</td><td>段落</td></tr>
+    <tr><td><code>&lt;a href="..."&gt;</code></td><td>行内</td><td>超链接</td></tr>
+    <tr><td><code>&lt;img src="..."&gt;</code></td><td>行内块</td><td>图片</td></tr>
+    <tr><td><code>&lt;input&gt;</code></td><td>行内块</td><td>输入框/按钮/复选框</td></tr>
+    <tr><td><code>&lt;button&gt;</code></td><td>行内块</td><td>按钮</td></tr>
+    <tr><td><code>&lt;ul&gt; + &lt;li&gt;</code></td><td>块</td><td>无序列表</td></tr>
+    <tr><td><code>&lt;table&gt;</code></td><td>块</td><td>表格</td></tr>
+    <tr><td><code>&lt;form&gt;</code></td><td>块</td><td>表单容器</td></tr>
+    <tr><td><code>&lt;h1&gt;~&lt;h6&gt;</code></td><td>块</td><td>标题</td></tr>
+    <tr><td><code>&lt;strong&gt;</code> / <code>&lt;em&gt;</code></td><td>行内</td><td>加粗/斜体</td></tr>
+  </table>
+
+  <h3>📐 HTML 页面骨架（每个网页都是这样）</h3>
+  <pre><span class="cmt">&lt;!DOCTYPE html&gt;</span>
+&lt;<span class="kw">html</span> lang=<span class="str">"zh-CN"</span>&gt;
+&lt;<span class="kw">head</span>&gt;
+  &lt;<span class="kw">meta</span> charset=<span class="str">"UTF-8"</span>&gt;
+  &lt;<span class="kw">title</span>&gt;页面标题&lt;<span class="kw">/title</span>&gt;
+  &lt;<span class="kw">link</span> rel=<span class="str">"stylesheet"</span> href=<span class="str">"style.css"</span>&gt;
+&lt;<span class="kw">/head</span>&gt;
+&lt;<span class="kw">body</span>&gt;
+  <span class="cmt">&lt;!-- 所有可见内容写在这里 --&gt;</span>
+  &lt;<span class="kw">script</span> src=<span class="str">"app.js"</span>&gt;&lt;<span class="kw">/script</span>&gt;
+&lt;<span class="kw">/body</span>&gt;
+&lt;<span class="kw">/html</span>&gt;</pre>
+
+  <div class="tip">💡 <strong>关键认知：</strong>HTML 描述"有什么"，CSS 描述"长什么样"，JS 描述"怎么动"。三者分工明确，不要混。</div>
+</div>
+
+<!-- ==================== CSS ==================== -->
+<div class="card css">
+  <h2>🎨 Part 2: CSS — 给网页化妆</h2>
+
+  <h3>🔧 CSS 三大核心：选择器 + 属性 + 布局</h3>
+
+  <p><strong>1. 选择器 — 选中你要装饰的元素</strong></p>
+  <table>
+    <tr><th>选择器</th><th>写法</th><th>选中什么</th></tr>
+    <tr><td>标签</td><td><code>div { }</code></td><td>所有 div</td></tr>
+    <tr><td>类（最常用！）</td><td><code>.card { }</code></td><td>class="card" 的元素</td></tr>
+    <tr><td>ID</td><td><code>#header { }</code></td><td>id="header"（唯一）</td></tr>
+    <tr><td>后代</td><td><code>.card p { }</code></td><td>.card 里的所有 p</td></tr>
+    <tr><td>悬停</td><td><code>button:hover { }</code></td><td>鼠标放上去时</td></tr>
+  </table>
+
+  <p><strong>2. 最常用的属性</strong></p>
+  <table>
+    <tr><th>类别</th><th>属性</th><th>作用</th></tr>
+    <tr><td>尺寸</td><td><code>width / height</code></td><td>宽/高</td></tr>
+    <tr><td>间距</td><td><code>margin</code>（外边距）/ <code>padding</code>（内边距）</td><td>元素之间的距离/内容到边框的距离</td></tr>
+    <tr><td>边框</td><td><code>border: 1px solid #ccc</code></td><td>边框</td></tr>
+    <tr><td>圆角</td><td><code>border-radius</code></td><td>圆角（=50% 变圆形）</td></tr>
+    <tr><td>颜色</td><td><code>color / background</code></td><td>文字色 / 背景色</td></tr>
+    <tr><td>字体</td><td><code>font-size / font-weight</code></td><td>字号 / 粗细</td></tr>
+    <tr><td>对齐</td><td><code>text-align: center</code></td><td>文字居中</td></tr>
+    <tr><td>阴影</td><td><code>box-shadow</code></td><td>卡片阴影（提升质感）</td></tr>
+    <tr><td>显示</td><td><code>display: none / flex / grid / block</code></td><td>控制显示方式</td></tr>
+  </table>
+
+  <h3>📐 Flexbox — 现代布局必学（80% 的布局用它搞定）</h3>
+  <pre><span class="cmt">/* 父容器 */</span>
+.<span class="kw">container</span> {
+  <span class="kw">display</span>: flex;
+  <span class="kw">justify-content</span>: space-between;  <span class="cmt">/* 水平：两端对齐 */</span>
+  <span class="kw">align-items</span>: center;            <span class="cmt">/* 垂直：居中 */</span>
+  <span class="kw">gap</span>: 16px;                       <span class="cmt">/* 子元素间距 */</span>
+  <span class="kw">flex-wrap</span>: wrap;                 <span class="cmt">/* 超出换行 */</span>
+}</pre>
+
+  <p>👇 Flex 实际效果：</p>
+  <div class="flex-demo">
+    <div>盒子 1</div>
+    <div>盒子 2</div>
+    <div>盒子 3</div>
+  </div>
+
+  <h3>📐 Grid — 二维布局（画廊/仪表盘专用）</h3>
+  <pre>.<span class="kw">grid</span> {
+  <span class="kw">display</span>: grid;
+  <span class="kw">grid-template-columns</span>: repeat(3, 1fr);  <span class="cmt">/* 3 等列 */</span>
+  <span class="kw">gap</span>: 10px;
+}</pre>
+  <div class="demo-grid">
+    <div>A</div><div>B</div><div>C</div>
+    <div>D</div><div>E</div><div>F</div>
+  </div>
+</div>
+
+<!-- ==================== JavaScript ==================== -->
+<div class="card js">
+  <h2>⚡ Part 3: JavaScript — 让页面动起来</h2>
+
+  <h3>🔧 JS 最核心 6 件事（80% 的代码就是这 6 个模式）</h3>
+
+  <table>
+    <tr><th>#</th><th>要做什么</th><th>代码模式</th></tr>
+    <tr><td>1</td><td>找到元素</td><td><code>document.querySelector(".card")</code></td></tr>
+    <tr><td>2</td><td>监听事件</td><td><code>el.addEventListener("click", fn)</code></td></tr>
+    <tr><td>3</td><td>修改内容</td><td><code>el.textContent = "新文字"</code></td></tr>
+    <tr><td>4</td><td>修改样式</td><td><code>el.classList.add("active")</code></td></tr>
+    <tr><td>5</td><td>创建元素</td><td><code>document.createElement("div")</code></td></tr>
+    <tr><td>6</td><td>网络请求</td><td><code>fetch(url).then(r => r.json())</code></td></tr>
+  </table>
+
+  <h3>🎯 核心语法速览（有 Python 基础 10 分钟学会）</h3>
+  <pre><span class="cmt">// 变量 — let 可变, const 常量</span>
+<span class="kw">let</span> name = <span class="str">"张三"</span>;
+<span class="kw">const</span> PI = 3.14;
+
+<span class="cmt">// 模板字符串 — 用反引号 `</span>
+console.<span class="fn">log</span>(<span class="str">`你好 ${name}`</span>);
+
+<span class="cmt">// 箭头函数 — Python lambda 的 JS 版</span>
+<span class="kw">const</span> <span class="fn">add</span> = (a, b) => a + b;
+
+<span class="cmt">// 数组操作</span>
+<span class="kw">let</span> nums = [1, 2, 3].<span class="fn">map</span>(x => x * 2);  <span class="cmt">// [2,4,6]</span>
+<span class="kw">let</span> evens = nums.<span class="fn">filter</span>(x => x > 3); <span class="cmt">// [4,6]</span>
+
+<span class="cmt">// 对象（像 Python 字典）</span>
+<span class="kw">let</span> user = { name: <span class="str">"张三"</span>, age: 28 };
+console.<span class="fn">log</span>(user.name);           <span class="cmt">// 张三</span>
+<span class="kw">let</span> { name, age } = user;       <span class="cmt">// 解构（像 Python 解包）</span>
+
+<span class="cmt">// 条件</span>
+<span class="kw">if</span> (age >= 18) { ... } <span class="kw">else</span> { ... }
+<span class="kw">let</span> result = score >= 60 ? <span class="str">"通过"</span> : <span class="str">"不通过"</span>;  <span class="cmt">// 三元</span>
+
+<span class="cmt">// 循环</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = 0; i < 5; i++) { ... }
+<span class="kw">for</span> (<span class="kw">let</span> item <span class="kw">of</span> items) { ... }  <span class="cmt">// 像 Python for...in</span></pre>
+
+</div>
+
+<!-- ==================== 完整小项目 ==================== -->
+<div class="card" style="border-left-color: var(--accent);">
+  <h2>🛠️ 完整实战：一个计数器应用</h2>
+  <p>HTML 结构 → CSS 样式 → JS 逻辑，三者的完整配合。</p>
+
+  <div class="render-box" style="text-align:center">
+    <p style="font-size:1.2em; margin-bottom:10px;">计数：<strong id="counter-display">0</strong></p>
+    <button class="btn" onclick="change(-1)" style="background:#e74c3c; margin-right:8px;">-1</button>
+    <button class="btn" onclick="reset()" style="background:#95a5a6; margin-right:8px;">重置</button>
+    <button class="btn" onclick="change(1)">+1</button>
+  </div>
+
+<pre><span class="cmt">&lt;!-- HTML --&gt;</span>
+&lt;<span class="kw">p</span>&gt;计数：&lt;<span class="kw">strong</span> id=<span class="str">"counter"</span>&gt;0&lt;<span class="kw">/strong</span>&gt;&lt;<span class="kw">/p</span>&gt;
+&lt;<span class="kw">button</span> onclick=<span class="str">"change(-1)"</span>&gt;-1&lt;<span class="kw">/button</span>&gt;
+&lt;<span class="kw">button</span> onclick=<span class="str">"reset()"</span>&gt;重置&lt;<span class="kw">/button</span>&gt;
+&lt;<span class="kw">button</span> onclick=<span class="str">"change(1)"</span>&gt;+1&lt;<span class="kw">/button</span>&gt;
+
+<span class="cmt">// JavaScript</span>
+<span class="kw">let</span> count = 0;
+<span class="kw">const</span> <span class="fn">update</span> = () => {
+  document.<span class="fn">querySelector</span>(<span class="str">"#counter"</span>).textContent = count;
+};
+<span class="kw">const</span> <span class="fn">change</span> = (n) => { count += n; <span class="fn">update</span>(); };
+<span class="kw">const</span> <span class="fn">reset</span> = () => { count = 0; <span class="fn">update</span>(); };</pre>
+
+</div>
+
+<footer>
+  🦞 一天速通文档 by CloudClaw — 记住 HTML=骨架, CSS=化妆, JS=动作。动手写，不要光看！
+</footer>
+
+</div>
+
+<script>
+  let count = 0;
+  const display = document.getElementById("counter-display");
+  function change(n) { count += n; display.textContent = count; }
+  function reset() { count = 0; display.textContent = count; }
+</script>
+</body>
+</html>

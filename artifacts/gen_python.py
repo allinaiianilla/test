@@ -1,0 +1,1845 @@
+#!/usr/bin/env python3
+"""Generate Python 30-day notebook — robust build"""
+import json, os
+
+OUT = "/root/.openclaw-autoclaw/workspace/artifacts/30days_python_cloudclaw.ipynb"
+
+def md(source):
+    return {"cell_type": "markdown", "metadata": {}, "source": source.strip().split("\n")}
+
+def code(source):
+    return {"cell_type": "code", "metadata": {}, "source": source.strip().split("\n"), "outputs": []}
+
+cells = [md("# 🐍 Python 30天核心训练（80/20法则）\n## 每天：📖示例 → ✏️练习 → 🧪单元测试\n### by CloudClaw 🦞")]
+
+# ===== DAYS DATA =====
+# Format: (title, example_md, exercise_md, test_code)
+D = []
+
+D.append(("Day 1 — 变量与赋值", r'''
+## 📖 变量、类型、赋值
+Python 是动态类型语言，变量不需要声明类型。
+
+```python
+name = "小明"        # str
+age = 25            # int  
+price = 19.99       # float
+is_valid = True     # bool
+
+# type() 查看类型
+print(type(name), type(age), type(price))
+```
+
+**命名规则**：字母/下划线开头，区分大小写，不能用关键字。
+''', r'''
+## ✏️ 练习
+### 练习1
+创建变量：你的名字(name)、年龄(age)、身高(height浮点数)、是否学生(is_student)
+
+### 练习2
+用 `type()` 检查上面每个变量的类型并打印
+
+### 练习3
+交换两个变量 a=10, b=20 的值（不用中间变量）
+''', r'''
+# 练习1
+assert 'name' in dir(), "请定义 name"
+assert isinstance(name, str), "name应为字符串"
+assert isinstance(age, int), "age应为整数"
+
+# 练习3
+a, b = 10, 20
+a, b = b, a
+assert a == 20 and b == 10, f"a={a}, b={b}"
+
+print("✅ Day 1 通过！")
+'''))
+
+D.append(("Day 2 — 字符串操作", r'''
+## 📖 字符串方法
+```python
+s = "  Hello, Python!  "
+print(s.strip())           # "Hello, Python!"
+print(s.lower())           # 全小写
+print(s.upper())           # 全大写
+print(s.replace("Python", "World"))
+
+# f-string (Python 3.6+)
+name, score = "小明", 95.5
+print(f"{name} 的成绩是 {score:.1f} 分")
+
+# 切片 & in
+text = "Hello World"
+print(text[0:5])    # Hello
+print(text[::-1])   # dlroW olleH
+print("Py" in "Python")  # True
+print("世界" in "你好世界")  # True
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+字符串 `s = "  CloudClaw Python  "`：去空格、全小写、统计 "o" 出现次数
+
+### 练习2
+用 f-string 输出 `"我是{name}，{age}岁，身高{height}米"`（name="测试", age=20, height=1.75）
+
+### 练习3
+反转字符串 "hello world"，并统计 'l' 计数
+''', r'''
+# 练习1
+s = "  CloudClaw Python  "
+cleaned = s.strip().lower()
+o_count = cleaned.count("o")
+assert cleaned == "cloudclaw python", f"期望 'cloudclaw python', 得到 '{cleaned}'"
+assert o_count == 2, f"o计数应为2, 得到{o_count}"
+
+# 练习2
+name, age, height = "测试", 20, 1.75
+result = f"我是{name}，{age}岁，身高{height}米"
+assert "测试" in result and "20" in result, f"f-string错误: {result}"
+
+# 练习3
+text = "hello world"
+reversed_text = text[::-1]
+l_count = text.count('l')
+assert reversed_text == "dlrow olleh", f"反转错误: {reversed_text}"
+assert l_count == 3, f"l计数错误: {l_count}"
+
+print("✅ Day 2 通过！")
+'''))
+
+D.append(("Day 3 — 数字与运算符", r'''
+## 📖 数值运算
+```python
+a, b = 10, 3
+print(a + b, a - b, a * b)    # 13 7 30
+print(a / b)     # 3.333...
+print(a // b)    # 3 (整除)
+print(a % b)     # 1 (取余)
+print(a ** b)    # 1000 (幂)
+
+# 常用函数
+print(abs(-5), round(3.14159, 2))
+print(max(1,5,3), min(1,5,3), sum([1,2,3]))
+
+# math 模块
+import math
+print(math.sqrt(16))   # 4.0
+print(math.pi)         # 3.14159...
+print(math.ceil(3.2))  # 4
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+计算圆的面积（半径 r=5），π×r²
+
+### 练习2
+判断闰年函数 `is_leap(year)`：能被4整除但不能被100整除，或能被400整除
+
+### 练习3
+华氏 98.6°F → 摄氏 `C=(F-32)*5/9`，保留2位小数
+''', r'''
+import math
+
+# 练习1
+r = 5
+area = math.pi * r ** 2
+assert abs(area - 78.54) < 0.1, f"面积~78.54, 得到{area:.2f}"
+
+# 练习2
+def is_leap(year):
+    return (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
+assert is_leap(2024) == True
+assert is_leap(2023) == False
+assert is_leap(2000) == True
+assert is_leap(1900) == False
+
+# 练习3
+F = 98.6
+C = round((F - 32) * 5 / 9, 2)
+assert C == 37.0, f"98.6F=37.0C, 得到{C}"
+
+print("✅ Day 3 通过！")
+'''))
+
+D.append(("Day 4 — 列表操作", r'''
+## 📖 列表
+```python
+nums = [1, 2, 3, 4, 5]
+nums.append(6)        # [1,2,3,4,5,6]
+nums.insert(0, 0)     # [0,1,2,3,4,5,6]
+nums.pop()            # 移除并返回最后一个
+nums.remove(0)        # 移除第一个0
+
+# 切片
+print(nums[1:3])      # [2,3]
+print(nums[-2:])      # 最后两个
+
+# 列表推导式
+squares = [x**2 for x in range(1,6)]           # [1,4,9,16,25]
+evens = [x for x in range(10) if x % 2 == 0]   # [0,2,4,6,8]
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+[3,1,4,1,5,9,2,6]：排序、反转、去重(set再转list)
+
+### 练习2
+列表推导式：1-20中能被3整除的数的平方
+
+### 练习3
+合并 ["a","b","c"] 和 [1,2,3] → [("a",1),("b",2),("c",3)]
+''', r'''
+# 练习1
+data = [3,1,4,1,5,9,2,6]
+s = sorted(data)
+r = s[::-1]
+u = list(set(data))
+assert s == [1,1,2,3,4,5,6,9], f"排序错误: {s}"
+assert len(u) == 7, f"去重后应有7个元素"
+
+# 练习2
+result = [x**2 for x in range(1,21) if x % 3 == 0]
+assert result == [9,36,81,144,225,324], f"错误: {result}"
+
+# 练习3
+merged = list(zip(["a","b","c"], [1,2,3]))
+assert merged == [("a",1),("b",2),("c",3)]
+
+print("✅ Day 4 通过！")
+'''))
+
+D.append(("Day 5 — 字典与集合", r'''
+## 📖 字典和集合
+```python
+# 字典
+user = {"name": "小明", "age": 25, "city": "北京"}
+print(user["name"])             # "小明"
+print(user.get("email", "无"))   # "无"
+user["email"] = "ming@test.com"
+
+# 字典推导式
+squares = {x: x**2 for x in range(1,6)}  # {1:1,2:4,...}
+
+# 集合
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+print(a | b)  # {1,2,3,4,5,6} 并集
+print(a & b)  # {3,4} 交集
+print(a - b)  # {1,2} 差集
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+学生信息字典 {name, age, scores:[85,90,78,92]}，计算平均分并加入字典
+
+### 练习2
+字典推导式：{1:1³, 2:2³, ..., 10:10³}
+
+### 练习3
+对 [1,2,2,3,3,3,4,4,4,4] 去重(set)并统计每个数的出现次数(dict)
+''', r'''
+# 练习1
+student = {"name": "小红", "age": 22, "scores": [85,90,78,92]}
+avg = sum(student["scores"]) / len(student["scores"])
+student["average"] = avg
+assert abs(avg - 86.25) < 0.01, f"平均分应为86.25: {avg}"
+
+# 练习2
+cubes = {x: x**3 for x in range(1,11)}
+assert cubes[3] == 27
+assert cubes[10] == 1000
+
+# 练习3
+nums = [1,2,2,3,3,3,4,4,4,4]
+unique = set(nums)
+assert unique == {1,2,3,4}
+counts = {x: nums.count(x) for x in unique}
+assert counts == {1:1, 2:2, 3:3, 4:4}
+
+print("✅ Day 5 通过！")
+'''))
+
+D.append(("Day 6 — 元组与解包", r'''
+## 📖 元组和解包
+```python
+# 元组 — 不可变
+point = (3, 4)
+x, y = point  # 解包
+
+# 星号解包
+first, *middle, last = [1,2,3,4,5]
+print(first, middle, last)  # 1 [2,3,4] 5
+
+# enumerate 带索引
+for i, val in enumerate(["a","b","c"]):
+    print(f"{i}: {val}")
+
+# 函数返回多个值
+def min_max(nums):
+    return min(nums), max(nums)
+m, M = min_max([3,1,4,1,5])
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+写 `min_max(nums)` → 返回元组 (min, max)
+
+### 练习2
+[5,3,8,6,7,2] 找所有偶数的索引(enumerate+推导式)
+
+### 练习3
+用 *args 写 `multiply_all(*args)` 返回乘积
+''', r'''
+# 练习1
+def min_max(nums):
+    return (min(nums), max(nums))
+assert min_max([3,1,4,1,5]) == (1,5)
+
+# 练习2
+idx = [i for i, v in enumerate([5,3,8,6,7,2]) if v % 2 == 0]
+assert idx == [2,3,5], f"偶数索引: {idx}"
+
+# 练习3
+def multiply_all(*args):
+    r = 1
+    for x in args: r *= x
+    return r
+assert multiply_all(2,3,4) == 24
+assert multiply_all(5) == 5
+
+print("✅ Day 6 通过！")
+'''))
+
+D.append(("Day 7 — 条件判断", r'''
+## 📖 if/elif/else
+```python
+score = 85
+if score >= 90:    grade = "A"
+elif score >= 80:  grade = "B"
+elif score >= 70:  grade = "C"
+else:              grade = "D"
+
+# 三元表达式
+status = "成年" if age >= 18 else "未成年"
+
+# match-case (Python 3.10+)
+code = 200
+match code:
+    case 200: msg = "成功"
+    case 404: msg = "未找到"
+    case _:   msg = "未知"
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+`grade(score)` → A(≥90)/B(≥75)/C(≥60)/D(<60)
+
+### 练习2
+`is_palindrome(s)` 判断回文（忽略大小写和空格）
+
+### 练习3
+三元表达式：n是3和5的倍数→"FizzBuzz"，n是3的倍数→"Fizz"，n是5的倍数→"Buzz"
+''', r'''
+# 练习1
+def grade(score):
+    if score >= 90: return "A"
+    elif score >= 75: return "B"
+    elif score >= 60: return "C"
+    else: return "D"
+assert grade(95)=="A" and grade(80)=="B" and grade(65)=="C" and grade(30)=="D"
+
+# 练习2
+def is_palindrome(s):
+    s = s.lower().replace(" ", "")
+    return s == s[::-1]
+assert is_palindrome("A man a plan a canal Panama") == True
+assert is_palindrome("hello") == False
+
+# 练习3
+def fizzbuzz(n):
+    return "FizzBuzz" if n%15==0 else ("Fizz" if n%3==0 else ("Buzz" if n%5==0 else str(n)))
+assert fizzbuzz(15) == "FizzBuzz"
+assert fizzbuzz(9) == "Fizz"
+assert fizzbuzz(10) == "Buzz"
+assert fizzbuzz(7) == "7"
+
+print("✅ Day 7 通过！")
+'''))
+
+D.append(("Day 8 — 循环", r'''
+## 📖 for/while
+```python
+# for + range
+for i in range(5): print(i)  # 0,1,2,3,4
+
+# while — 条件为真时执行
+count = 0
+while count < 5:
+    count += 1
+
+# break(跳出) / continue(跳过)
+for i in range(10):
+    if i == 5: break
+    if i % 2 == 0: continue
+    print(i)  # 只打印 1,3
+
+# 嵌套循环
+for i in range(1, 4):
+    for j in range(1, 4):
+        print(f"{i}x{j}={i*j}")
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+用嵌套 for 打印 9x9 乘法表（1-9）
+
+### 练习2
+while 循环：从 100 开始每次减 7，直到 < 0
+
+### 练习3
+用 for 计算 1+2+...+100（不用 sum）
+''', r'''
+# 练习1
+table = []
+for i in range(1, 10):
+    row = []
+    for j in range(1, i+1):
+        row.append(f"{j}x{i}={i*j}")
+    table.append(row)
+assert table[0] == ["1x1=1"]
+assert table[8][-1] == "9x9=81"
+
+# 练习2
+vals = []
+n = 100
+while n >= 0:
+    vals.append(n)
+    n -= 7
+assert vals[-1] < 7, "最后应<7"
+
+# 练习3
+total = 0
+for i in range(1, 101):
+    total += i
+assert total == 5050
+
+print("✅ Day 8 通过！")
+'''))
+
+D.append(("Day 9 — 推导式", r'''
+## 📖 列表/字典/集合推导式
+```python
+# 列表推导式
+squares = [x**2 for x in range(10)]
+evens = [x for x in range(20) if x % 2 == 0]
+
+# 字典推导式
+word = "hello"
+freq = {ch: word.count(ch) for ch in set(word)}
+
+# 集合推导式
+lengths = {len(w) for w in ["hi","hello","hey"]}  # {2,3,5}
+
+# 嵌套推导式
+matrix = [[i*j for j in range(1,4)] for i in range(1,4)]
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+列表推导式：1-50中能被3或5整除的数
+
+### 练习2
+字典推导式：{"a":97, "b":98, ..., "z":122}
+
+### 练习3
+["hello","world","python","code","ai"] 集合推导式 → 所有首字母(去重)
+''', r'''
+# 练习1
+d = [x for x in range(1,51) if x%3==0 or x%5==0]
+assert 3 in d and 5 in d and 15 in d and 1 not in d
+
+# 练习2
+ad = {chr(i): i for i in range(97, 123)}
+assert ad['a']==97 and ad['z']==122 and len(ad)==26
+
+# 练习3
+w = ["hello","world","python","code","ai"]
+fl = {x[0] for x in w}
+assert fl == {'h','w','p','c','a'}, f"首字母: {fl}"
+
+print("✅ Day 9 通过！")
+'''))
+
+D.append(("Day 10 — 函数基础", r'''
+## 📖 函数
+```python
+def greet(name, greeting="你好"):
+    """返回问候语"""
+    return f"{greeting}，{name}！"
+
+print(greet("小明"))                    # 你好，小明！
+print(greet("小红", greeting="早上好"))  # 早上好，小红！
+
+# *args(位置可变)  **kwargs(关键字可变)
+def log(*messages, **metadata):
+    for msg in messages:
+        print(f"[{metadata.get('level','INFO')}] {msg}")
+log("启动", "连接DB", level="DEBUG")
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+`calculator(a, b, op)` 根据 op("+","-","*","/") 返回结果
+
+### 练习2
+`describe_person(**kwargs)` → 格式化输出所有键值
+
+### 练习3
+`fibonacci(n)` → 第n个斐波那契数(n≥0, 从0,1开始)
+''', r'''
+# 练习1
+def calculator(a, b, op):
+    if op=="+": return a+b
+    elif op=="-": return a-b
+    elif op=="*": return a*b
+    elif op=="/": return a/b if b!=0 else None
+assert calculator(10,5,"+")==15 and calculator(10,5,"*")==50
+
+# 练习2
+def describe_person(**kw):
+    return ", ".join(f"{k}={v}" for k,v in kw.items())
+d = describe_person(name="小明", age=25)
+assert "name=小明" in d and "age=25" in d
+
+# 练习3
+def fibonacci(n):
+    if n <= 1: return n
+    a, b = 0, 1
+    for _ in range(n-1): a, b = b, a+b
+    return b
+assert fibonacci(0)==0 and fibonacci(10)==55 and fibonacci(1)==1
+
+print("✅ Day 10 通过！")
+'''))
+
+D.append(("Day 11 — Lambda 与高阶函数", r'''
+## 📖 lambda / map / filter / reduce
+```python
+square = lambda x: x**2
+add = lambda a, b: a + b
+
+# map: 对每个元素应用函数
+doubled = list(map(lambda x: x*2, [1,2,3,4,5]))  # [2,4,6,8,10]
+
+# filter: 筛选满足条件的元素
+evens = list(filter(lambda x: x%2==0, [1,2,3,4,5,6]))  # [2,4,6]
+
+# sorted 自定义排序
+words = ["python","go","rust","js"]
+by_len = sorted(words, key=lambda w: len(w))  # ["go","js","rust","python"]
+
+from functools import reduce
+total = reduce(lambda a,b: a+b, [1,2,3,4,5])  # 15
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+map + lambda: [1,2,3,4,5] → ["数字:1", ...]
+
+### 练习2
+filter + lambda: ["apple","banana","kiwi","grape"] 筛选长度>4
+
+### 练习3
+sorted + lambda: [("小明",85),("小红",92),("小刚",78)] 按成绩降序
+''', r'''
+# 练习1
+r1 = list(map(lambda x: f"数字:{x}", [1,2,3,4,5]))
+assert r1 == ["数字:1","数字:2","数字:3","数字:4","数字:5"]
+
+# 练习2
+r2 = list(filter(lambda w: len(w)>4, ["apple","banana","kiwi","grape"]))
+assert r2 == ["apple","banana","grape"], f"结果: {r2}"
+
+# 练习3
+scores = [("小明",85),("小红",92),("小刚",78)]
+ranked = sorted(scores, key=lambda x: x[1], reverse=True)
+assert ranked[0]==("小红",92) and ranked[-1]==("小刚",78)
+
+print("✅ Day 11 通过！")
+'''))
+
+D.append(("Day 12 — 装饰器与闭包", r'''
+## 📖 装饰器
+```python
+import time, functools
+
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        print(f"{func.__name__} 耗时: {time.time()-start:.4f}s")
+        return result
+    return wrapper
+
+@timer
+def slow_sum(n):
+    return sum(range(n))
+
+# 闭包 — 函数记住外部变量
+def make_multiplier(n):
+    def mul(x): return x * n  # n被"记住"
+    return mul
+
+double = make_multiplier(2)
+print(double(5))  # 10
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+装饰器 `@log_call`：打印 `调用{函数名}，参数={args}`
+
+### 练习2
+闭包 `counter()`：每次调用返回下一个数(从1开始)
+
+### 练习3
+装饰器 `@retry(max_attempts=3)`：异常时自动重试
+''', r'''
+# 练习1
+def log_call(func):
+    def wrapper(*a,**kw):
+        print(f"调用{func.__name__}，参数={a}")
+        return func(*a,**kw)
+    return wrapper
+@log_call
+def add(a,b): return a+b
+assert add(3,4)==7
+
+# 练习2
+def counter():
+    c=[0]
+    def inner():
+        c[0]+=1
+        return c[0]
+    return inner
+ct=counter()
+assert ct()==1 and ct()==2 and ct()==3
+
+# 练习3
+def retry(n=3):
+    def deco(func):
+        def wrapper(*a,**kw):
+            for i in range(n):
+                try: return func(*a,**kw)
+                except:
+                    if i==n-1: raise
+            return None
+        return wrapper
+    return deco
+
+attempts=0
+@retry(3)
+def flaky():
+    global attempts
+    attempts+=1
+    if attempts<3: raise ValueError("fail")
+    return "ok"
+assert flaky()=="ok" and attempts==3
+
+print("✅ Day 12 通过！")
+'''))
+
+D.append(("Day 13 — 文件读写", r'''
+## 📖 文件 I/O
+```python
+# 写文件
+with open("test.txt", "w", encoding="utf-8") as f:
+    f.write("第一行\\n第二行\\n")
+
+# 读文件
+with open("test.txt", "r", encoding="utf-8") as f:
+    content = f.read()          # 全部
+    # f.readlines()             # 每行
+
+# 逐行读(大文件推荐)
+with open("test.txt", "r") as f:
+    for line in f:
+        print(line.strip())
+
+# 追加模式
+with open("test.txt", "a") as f:
+    f.write("新行\\n")
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+["苹果","香蕉","橘子","葡萄"] 逐行写入 fruits.txt
+
+### 练习2
+读取 fruits.txt，统计行数和总字符数
+
+### 练习3
+CSV解析："姓名,年龄,城市\\n小明,25,北京\\n小红,22,上海"
+''', r'''
+import csv, io, os, tempfile
+
+with tempfile.TemporaryDirectory() as tmp:
+    path = os.path.join(tmp, "fruits.txt")
+    fruits = ["苹果","香蕉","橘子","葡萄"]
+    with open(path, "w", encoding="utf-8") as f:
+        for fruit in fruits:
+            f.write(fruit + "\\n")
+    with open(path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    assert len(lines) == 4, f"行数4, 实际{len(lines)}"
+    assert lines[0].strip() == "苹果"
+
+# 练习3
+csv_data = "姓名,年龄,城市\\n小明,25,北京\\n小红,22,上海"
+reader = csv.DictReader(io.StringIO(csv_data))
+rows = list(reader)
+assert rows[0] == {"姓名":"小明","年龄":"25","城市":"北京"}
+
+print("✅ Day 13 通过！")
+'''))
+
+D.append(("Day 14 — 异常处理", r'''
+## 📖 try/except/else/finally
+```python
+def safe_divide(a, b):
+    try:
+        result = a / b
+    except ZeroDivisionError:
+        return "除数不能为0"
+    except TypeError:
+        return "需要数字"
+    else:
+        return f"结果: {result}"
+    finally:
+        print("计算完毕")  # 始终执行
+
+# 自定义异常
+class ValidationError(Exception):
+    def __init__(self, msg, code=400):
+        self.code = code
+        super().__init__(msg)
+
+def validate_age(age):
+    if age < 0 or age > 150:
+        raise ValidationError(f"无效年龄: {age}")
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+`parse_int(s)` try/except 转整数，失败返回None
+
+### 练习2
+自定义异常 `InsufficientFundsError`(balance, amount)
+
+### 练习3
+`withdraw(balance, amount)` 余额不足抛异常
+''', r'''
+# 练习1
+def parse_int(s):
+    try: return int(s)
+    except (ValueError,TypeError): return None
+assert parse_int("123")==123 and parse_int("abc") is None
+
+# 练习2 & 3
+class InsufficientFundsError(Exception):
+    def __init__(self, balance, amount):
+        self.balance, self.amount = balance, amount
+        super().__init__(f"余额不足: {balance}<{amount}")
+
+def withdraw(balance, amount):
+    if amount > balance:
+        raise InsufficientFundsError(balance, amount)
+    return balance - amount
+
+assert withdraw(1000, 500) == 500
+try:
+    withdraw(500, 1000)
+    assert False
+except InsufficientFundsError as e:
+    assert e.balance==500 and e.amount==1000
+
+print("✅ Day 14 通过！")
+'''))
+
+D.append(("Day 15 — 上下文管理器", r'''
+## 📖 with 语句
+```python
+# with 自动管理资源
+with open("file.txt") as f:
+    data = f.read()
+
+# 自定义 (类方式)
+class Timer:
+    def __enter__(self):
+        import time
+        self.start = time.time()
+        return self
+    def __exit__(self, *args):
+        import time
+        print(f"耗时: {time.time()-self.start:.3f}s")
+
+# contextlib 方式
+from contextlib import contextmanager
+@contextmanager
+def tag(name):
+    print(f"<{name}>")
+    yield
+    print(f"</{name}>")
+
+with tag("div"):
+    print("  内容")
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+类实现 `FileLogger` 上下文管理器：进入→打开文件，退出→关闭+打印行数
+
+### 练习2
+`@contextmanager` 实现 `temp_chdir(path)` 临时切换目录
+
+### 练习3
+`SuppressError` 上下文管理器，抑制指定异常
+''', r'''
+import os, tempfile
+from contextlib import contextmanager
+
+# 练习1
+class FileLogger:
+    def __init__(self, path): self.path=path
+    def __enter__(self):
+        self.f=open(self.path,"w")
+        return self.f
+    def __exit__(self,*a):
+        self.f.close()
+
+with tempfile.TemporaryDirectory() as tmp:
+    p = os.path.join(tmp,"log.txt")
+    with FileLogger(p) as f:
+        f.write("hello\\n")
+    with open(p) as f:
+        assert f.read()=="hello\\n"
+
+# 练习2
+@contextmanager
+def temp_chdir(path):
+    old=os.getcwd()
+    os.chdir(path)
+    try: yield
+    finally: os.chdir(old)
+
+# 练习3
+class SuppressError:
+    def __init__(self,*exs): self.exs=exs
+    def __enter__(self): return self
+    def __exit__(self, typ,*a):
+        return typ is not None and issubclass(typ, self.exs)
+
+with SuppressError(ValueError):
+    int("abc")  # 不抛异常
+assert True
+
+print("✅ Day 15 通过！")
+'''))
+
+D.append(("Day 16 — 类与对象", r'''
+## 📖 面向对象基础
+```python
+class Dog:
+    species = "犬科"      # 类属性(共享)
+    
+    def __init__(self, name, age):
+        self.name = name  # 实例属性
+        self.age = age
+    
+    def bark(self):
+        return f"{self.name}: 汪汪！"
+    
+    def __str__(self):
+        return f"Dog({self.name}, {self.age}岁)"
+
+dog1 = Dog("旺财", 3)
+print(dog1.bark())   # 旺财: 汪汪！
+print(dog1)          # Dog(旺财, 3岁)
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+`BankAccount` 类：owner, balance, deposit(amount), withdraw(amount)
+
+### 练习2
+添加 `__str__` → "{owner}的账户，余额: {balance}元"
+
+### 练习3
+`Student` 类：name, scores(列表), average() 方法
+''', r'''
+# 练习1 & 2
+class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner, self.balance = owner, balance
+    def deposit(self, amount):
+        self.balance += amount
+        return self.balance
+    def withdraw(self, amount):
+        if amount > self.balance:
+            raise ValueError("余额不足")
+        self.balance -= amount
+        return self.balance
+    def __str__(self):
+        return f"{self.owner}的账户，余额: {self.balance}元"
+
+acc = BankAccount("小明", 1000)
+acc.deposit(500)
+assert acc.balance == 1500
+acc.withdraw(300)
+assert acc.balance == 1200
+assert "小明" in str(acc) and "1200" in str(acc)
+
+# 练习3
+class Student:
+    def __init__(self, name, scores):
+        self.name, self.scores = name, scores
+    def average(self):
+        return sum(self.scores)/len(self.scores)
+
+s = Student("小红", [85,90,78,92])
+assert abs(s.average()-86.25) < 0.01
+
+print("✅ Day 16 通过！")
+'''))
+
+D.append(("Day 17 — 继承与多态", r'''
+## 📖 继承
+```python
+class Animal:
+    def __init__(self, name): self.name = name
+    def speak(self): return "..."
+
+class Cat(Animal):
+    def speak(self): return f"{self.name}: 喵~"
+
+class Duck(Animal):
+    def speak(self): return f"{self.name}: 嘎嘎！"
+
+# 多态 — 同一接口不同行为
+for a in [Cat("小花"), Duck("唐老鸭")]:
+    print(a.speak())
+
+# super() 调用父类
+class Kitten(Cat):
+    def __init__(self, name, toy):
+        super().__init__(name)
+        self.toy = toy
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+`Shape` 基类 + `Rectangle/Circle` 子类，各自实现 `area()`
+
+### 练习2
+`Vehicle(基类) → Car(max=200) / Bicycle(max=30)` 各自覆盖 max_speed
+
+### 练习3
+多态验证：`[Rectangle(2,3), Circle(1)]` 各自计算面积
+''', r'''
+import math
+
+# 练习1
+class Shape:
+    def area(self): raise NotImplementedError
+
+class Rectangle(Shape):
+    def __init__(self,w,h): self.w,self.h=w,h
+    def area(self): return self.w*self.h
+
+class Circle(Shape):
+    def __init__(self,r): self.r=r
+    def area(self): return math.pi*self.r**2
+
+r=Rectangle(4,5); c=Circle(3)
+assert r.area()==20 and abs(c.area()-28.27)<0.1
+
+# 练习2
+class Vehicle:
+    speed=0
+    @property
+    def max_speed(self): return 100
+class Car(Vehicle):
+    @property
+    def max_speed(self): return 200
+class Bicycle(Vehicle):
+    @property
+    def max_speed(self): return 30
+assert Car().max_speed==200 and Bicycle().max_speed==30
+
+# 练习3
+shapes=[Rectangle(2,3), Circle(1)]
+areas=[s.area() for s in shapes]
+assert areas[0]==6 and abs(areas[1]-math.pi)<0.01
+
+print("✅ Day 17 通过！")
+'''))
+
+D.append(("Day 18 — 魔术方法", r'''
+## 📖 Dunder Methods
+```python
+class Vector:
+    def __init__(self, x, y): self.x,self.y=x,y
+    def __repr__(self): return f"Vector({self.x},{self.y})"
+    def __add__(self, o): return Vector(self.x+o.x, self.y+o.y)
+    def __eq__(self, o): return self.x==o.x and self.y==o.y
+    def __len__(self): return 2
+
+v1, v2 = Vector(1,2), Vector(3,4)
+print(v1+v2)          # Vector(4,6)
+print(v1==Vector(1,2))  # True
+
+# @property — 像属性一样调用方法
+class Circle:
+    def __init__(self, r): self._r=r
+    @property
+    def diameter(self): return self._r*2
+    @diameter.setter
+    def diameter(self, d): self._r=d/2
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+`Money(amount, currency)` 实现 __add__、__sub__、__repr__
+
+### 练习2
+给 Money 加 __eq__ 和 __lt__
+
+### 练习3
+`Temperature` 类，用 @property 实现摄氏↔华氏互转
+''', r'''
+# 练习1 & 2
+class Money:
+    def __init__(self, amount, currency="CNY"):
+        self.amount, self.currency = amount, currency
+    def __add__(self, o):
+        if self.currency!=o.currency: raise ValueError("货币不同")
+        return Money(self.amount+o.amount, self.currency)
+    def __sub__(self, o):
+        return Money(self.amount-o.amount, self.currency)
+    def __repr__(self):
+        return f"{self.amount:.2f} {self.currency}"
+    def __eq__(self,o): return self.amount==o.amount and self.currency==o.currency
+    def __lt__(self,o): return self.amount<o.amount
+
+m1=Money(100); m2=Money(50)
+assert repr(m1+m2)=="150.00 CNY"
+assert repr(m1-m2)=="50.00 CNY"
+assert m1>m2 and m1!=m2
+
+# 练习3
+class Temperature:
+    def __init__(self, celsius=0): self.celsius=celsius
+    @property
+    def fahrenheit(self): return self.celsius*9/5+32
+    @fahrenheit.setter
+    def fahrenheit(self, f): self.celsius=(f-32)*5/9
+
+t=Temperature(0)
+assert t.fahrenheit==32
+t.fahrenheit=212
+assert abs(t.celsius-100)<0.01
+
+print("✅ Day 18 通过！")
+'''))
+
+D.append(("Day 19 — 模块", r'''
+## 📖 模块导入
+```python
+import math
+from math import sqrt, pi
+from datetime import datetime as dt
+
+# 常用标准库
+import os, sys, json, random, re
+from collections import Counter, defaultdict
+
+# 查看模块
+print(dir(math))
+print(math.__doc__)    # 模块文档
+
+# __name__ 判断是否直接运行
+if __name__ == "__main__":
+    print("直接运行")
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+datetime: 当前日期、7天后日期、日期差
+
+### 练习2
+random: 10个1-100随机数，去重排序
+
+### 练习3
+collections.Counter: ["a","b","c","a","b","a"] 统计，top3
+''', r'''
+from datetime import datetime, timedelta
+import random
+from collections import Counter
+
+# 练习1
+today = datetime.now().date()
+next_week = today + timedelta(days=7)
+diff = (next_week - today).days
+assert diff == 7
+
+# 练习2
+random.seed(42)
+rands = sorted(set(random.randint(1,100) for _ in range(10)))
+assert len(rands)<=10 and all(1<=x<=100 for x in rands)
+
+# 练习3
+c = Counter(["a","b","c","a","b","a"])
+assert c["a"]==3 and c["b"]==2
+top3 = c.most_common(3)
+assert top3[0]==("a",3)
+
+print("✅ Day 19 通过！")
+'''))
+
+D.append(("Day 20 — 包与项目结构", r'''
+## 📖 Package & Project
+```
+my_project/
+├── my_package/
+│   ├── __init__.py
+│   ├── core.py
+│   └── utils.py
+├── tests/
+│   └── test_core.py
+├── setup.py
+├── requirements.txt
+└── README.md
+```
+
+__init__.py 控制导出:
+```python
+__all__ = ["core", "utils"]
+from . import core
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+写出标准项目目录: src/, tests/, docs/
+
+### 练习2
+__init__.py 导出 add/subtract/multiply
+
+### 练习3
+setup.py 模板: name, version, install_requires
+''', r'''
+import os, tempfile
+
+# 练习1
+with tempfile.TemporaryDirectory() as tmp:
+    for d in ["src","tests","docs"]:
+        os.makedirs(os.path.join(tmp,"myproj",d))
+    created = os.listdir(os.path.join(tmp,"myproj"))
+    assert all(d in created for d in ["src","tests","docs"])
+
+# 练习2
+class FakeOps:
+    def add(a,b): return a+b
+    def subtract(a,b): return a-b
+    def multiply(a,b): return a*b
+assert FakeOps.add(3,4)==7 and FakeOps.subtract(10,3)==7 and FakeOps.multiply(3,5)==15
+
+# 练习3
+s = {"name":"pkg","version":"0.1.0","install_requires":["requests"]}
+assert "name" in s and "install_requires" in s
+
+print("✅ Day 20 通过！")
+'''))
+
+D.append(("Day 21 — 虚拟环境", r'''
+## 📖 venv & pip
+```bash
+# 创建虚拟环境
+python -m venv .venv
+
+# 激活 (Linux/Mac)
+source .venv/bin/activate
+
+# 安装
+pip install requests pandas
+pip install -r requirements.txt
+
+# 导出
+pip freeze > requirements.txt
+```
+
+虚拟环境让每个项目有独立依赖，避免版本冲突。
+''', r'''
+## ✏️ 练习
+### 练习1
+生成 requirements.txt: requests, pandas, numpy, pytest
+
+### 练习2
+`check_imports(modules)` 尝试导入，返回 {模块: True/False}
+
+### 练习3
+检查 Python 版本、平台 (sys, platform)
+''', r'''
+import sys, platform, importlib
+
+# 练习1
+deps = ["requests","pandas","numpy","pytest"]
+req = "\\n".join(deps)
+assert "pytest" in req and "requests" in req
+
+# 练习2
+def check_imports(mods):
+    r={}
+    for m in mods:
+        try:
+            importlib.import_module(m)
+            r[m]=True
+        except ImportError:
+            r[m]=False
+    return r
+res = check_imports(["json","math","os"])
+assert all(res.values()), f"基础模块应可导入: {res}"
+
+# 练习3
+info = {"ver":sys.version.split()[0], "plat":platform.system(), "impl":platform.python_implementation()}
+assert info["impl"]=="CPython" and "." in info["ver"]
+
+print("✅ Day 21 通过！")
+'''))
+
+D.append(("Day 22 — 单元测试", r'''
+## 📖 unittest
+```python
+import unittest
+
+def add(a, b): return a + b
+
+class TestMath(unittest.TestCase):
+    def test_add_positive(self):
+        self.assertEqual(add(2,3), 5)
+    def test_add_raises(self):
+        with self.assertRaises(TypeError):
+            add("a", 1)
+    def setUp(self):
+        self.data = [1,2,3]
+
+# python -m unittest test_file.py
+```
+***pytest***(第三方) 更简洁: `pip install pytest`, 直接用 assert。
+''', r'''
+## ✏️ 练习
+### 练习1
+为 `divide(a,b)` 写 3 个 unittest(正常/除零/类型)
+
+### 练习2
+`validate_email(email)` 简单验证(@和.) + 测试
+
+### 练习3
+`ShoppingCart` 类 + setUp + 测试 add/total/count
+''', r'''
+import unittest
+
+# 练习1
+def divide(a,b):
+    if b==0: raise ZeroDivisionError("除零")
+    return a/b
+
+class TestDivide(unittest.TestCase):
+    def test_ok(self): self.assertEqual(divide(10,2),5)
+    def test_zero(self):
+        with self.assertRaises(ZeroDivisionError): divide(1,0)
+
+# 练习2
+def validate_email(e):
+    return "@" in e and "." in e.split("@")[-1]
+
+class TestEmail(unittest.TestCase):
+    def test_ok(self): self.assertTrue(validate_email("a@b.com"))
+    def test_bad(self): self.assertFalse(validate_email("not-email"))
+
+# 练习3
+class ShoppingCart:
+    def __init__(self): self.items=[]
+    def add(self, item, price): self.items.append((item,price))
+    def total(self): return sum(p for _,p in self.items)
+    def count(self): return len(self.items)
+
+class TestCart(unittest.TestCase):
+    def setUp(self):
+        self.c= ShoppingCart()
+        self.c.add("apple",5); self.c.add("banana",3)
+    def test_total(self): self.assertEqual(self.c.total(),8)
+    def test_count(self): self.assertEqual(self.c.count(),2)
+
+suite=unittest.TestSuite()
+for cls in [TestDivide, TestEmail, TestCart]:
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(cls))
+result=unittest.TextTestRunner(verbosity=0).run(suite)
+ok = result.wasSuccessful()
+print(f"{'✅' if ok else '❌'} Day 22: {result.testsRun}t/{len(result.failures)}f/{len(result.errors)}e")
+'''))
+
+D.append(("Day 23 — 调试", r'''
+## 📖 调试技巧
+```python
+# 1. print 大法
+def func(x):
+    print(f"DEBUG: x={x}")  # 临时
+
+# 2. pdb (交互式)
+# import pdb; pdb.set_trace()
+
+# 3. logging (推荐)
+import logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+def process(data):
+    logging.debug(f"开始处理 {len(data)} 条")
+    try:
+        result = [x*2 for x in data]
+        logging.info(f"完成: {result[:3]}")
+        return result
+    except Exception as e:
+        logging.error(f"失败: {e}", exc_info=True)
+        raise
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+logging 配置：同时输出到控制台+文件 app.log
+
+### 练习2
+`safe_parse_json(s)` debug日志+失败error日志
+
+### 练习3
+traceback 格式化异常信息
+''', r'''
+import logging, io, json, os, tempfile, traceback
+
+# 练习1
+with tempfile.TemporaryDirectory() as tmp:
+    lp = os.path.join(tmp,"app.log")
+    logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s',
+        handlers=[logging.FileHandler(lp), logging.StreamHandler(io.StringIO())])
+    lg = logging.getLogger("t")
+    lg.info("测试")
+    with open(lp) as f:
+        assert "测试" in f.read()
+
+# 练习2
+def safe_parse_json(s):
+    lg = logging.getLogger("t")
+    lg.debug(f"解析: {s[:30]}")
+    try: return json.loads(s)
+    except json.JSONDecodeError as e:
+        lg.error(f"失败: {e}")
+        return None
+assert safe_parse_json('{"a":1}') == {"a":1}
+assert safe_parse_json("bad") is None
+
+# 练习3
+try: 1/0
+except Exception as e:
+    tb = "".join(traceback.format_exception(type(e),e,e.__traceback__))
+    assert "ZeroDivisionError" in tb
+
+print("✅ Day 23 通过！")
+'''))
+
+D.append(("Day 24 — 日志最佳实践", r'''
+## 📖 生产级日志配置
+```python
+import logging
+import logging.handlers
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# 控制台 handler
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+console.setFormatter(logging.Formatter(
+    '%(asctime)s %(levelname)-8s %(message)s'))
+
+# 文件按大小轮转
+fh = logging.handlers.RotatingFileHandler(
+    'app.log', maxBytes=1024*1024, backupCount=3)
+fh.setLevel(logging.DEBUG)
+
+logger.addHandler(console); logger.addHandler(fh)
+
+# 最佳实践
+# 1. 模块级: logger = logging.getLogger(__name__)
+# 2. 不记录敏感信息
+# 3. 异常用 logger.exception()
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+模块级logger模拟Web请求处理(收到→处理→响应)
+
+### 练习2
+@log_execution 装饰器记录函数耗时(DEBUG级别)
+
+### 练习3
+日志过滤器: 过滤含"password"的日志
+''', r'''
+import logging, io, time
+
+# 练习1
+lg=logging.getLogger("web"); lg.setLevel(logging.DEBUG)
+cap=io.StringIO(); lg.addHandler(logging.StreamHandler(cap))
+def handle(path):
+    lg.info(f"请求: {path}")
+    lg.debug(f"处理: {path}")
+    lg.info("响应: 200")
+handle("/api/users")
+assert "请求" in cap.getvalue() and "200" in cap.getvalue()
+
+# 练习2
+def log_execution(func):
+    def wrapper(*a,**kw):
+        lg.debug(f"执行 {func.__name__}")
+        s=time.time(); r=func(*a,**kw)
+        lg.debug(f"完成 {func.__name__} {time.time()-s:.4f}s")
+        return r
+    return wrapper
+@log_execution
+def slow(n): return sum(range(n))
+assert slow(100)==4950
+
+# 练习3
+class PwdFilter(logging.Filter):
+    def filter(self, r):
+        return "password" not in r.getMessage().lower()
+f=PwdFilter()
+assert f.filter(logging.makeLogRecord({"msg":"ok"}))==True
+assert f.filter(logging.makeLogRecord({"msg":"password x"}))==False
+
+print("✅ Day 24 通过！")
+'''))
+
+D.append(("Day 25 — 迭代器", r'''
+## 📖 迭代器协议
+```python
+# iter() 获取迭代器
+nums = [1,2,3]
+it = iter(nums)
+print(next(it)) # 1
+print(next(it)) # 2
+# next(it) after end → StopIteration
+
+# 自定义迭代器
+class CountDown:
+    def __init__(self, s): self.c=s
+    def __iter__(self): return self
+    def __next__(self):
+        if self.c<0: raise StopIteration
+        r=self.c; self.c-=1; return r
+
+for n in CountDown(3): print(n)  # 3,2,1,0
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+`EvenNumbers(n)` 迭代器 → 0到n的偶数
+
+### 练习2
+`FizzBuzz(n)` 迭代器 → 3→Fizz, 5→Buzz, 15→FizzBuzz
+
+### 练习3
+`CycleIterator(items)` 无限循环
+''', r'''
+# 练习1
+class EvenNumbers:
+    def __init__(self,n): self.n=n; self.c=0
+    def __iter__(self): return self
+    def __next__(self):
+        while self.c<=self.n:
+            r=self.c; self.c+=2; return r
+        raise StopIteration
+assert list(EvenNumbers(10))==[0,2,4,6,8,10]
+
+# 练习2
+class FizzBuzz:
+    def __init__(self,n): self.n=n; self.i=0
+    def __iter__(self): return self
+    def __next__(self):
+        self.i+=1
+        if self.i>self.n: raise StopIteration
+        if self.i%15==0: return "FizzBuzz"
+        if self.i%3==0: return "Fizz"
+        if self.i%5==0: return "Buzz"
+        return str(self.i)
+assert list(FizzBuzz(5))==['1','2','Fizz','4','Buzz']
+
+# 练习3
+class CycleIterator:
+    def __init__(self,items): self.items=items; self.i=-1
+    def __iter__(self): return self
+    def __next__(self):
+        self.i=(self.i+1)%len(self.items)
+        return self.items[self.i]
+c=CycleIterator([1,2,3])
+assert [next(c) for _ in range(5)]==[1,2,3,1,2]
+
+print("✅ Day 25 通过！")
+'''))
+
+D.append(("Day 26 — 生成器", r'''
+## 📖 生成器
+```python
+# yield 代替 return
+def count_up(n):
+    i=1
+    while i<=n:
+        yield i
+        i+=1
+
+# 生成器表达式
+squares = (x**2 for x in range(5))
+print(next(squares))    # 0
+print(list(squares))    # [1,4,9,16] (继续)
+
+# yield from 委托
+def chain():
+    yield from [1,2,3]
+    yield from "abc"
+print(list(chain()))  # [1,2,3,'a','b','c']
+```
+
+**惰性求值**：生成器不一次性产生所有值，内存友好。
+''', r'''
+## ✏️ 练习
+### 练习1
+`fibonacci_gen(n)` → 前n个斐波那契数
+
+### 练习2
+`read_lines_batched(path, batch_size)` 分批yield行
+
+### 练习3
+用 `yield from` 扁平化嵌套列表 `flatten(nested)`
+''', r'''
+import os, tempfile
+
+# 练习1
+def fib(n):
+    a,b=0,1
+    for _ in range(n):
+        yield a
+        a,b=b,a+b
+assert list(fib(5))==[0,1,1,2,3]
+assert list(fib(10))[9]==34
+
+# 练习2
+def batch_read(path, bs):
+    with open(path) as f:
+        batch=[]
+        for line in f:
+            batch.append(line.strip())
+            if len(batch)>=bs:
+                yield batch; batch=[]
+        if batch: yield batch
+
+with tempfile.TemporaryDirectory() as tmp:
+    p=os.path.join(tmp,"d.txt")
+    with open(p,"w") as f:
+        f.write("\\n".join(map(str,range(7))))
+    batches=list(batch_read(p,3))
+    assert len(batches)==3 and batches[0]==['0','1','2']
+
+# 练习3
+def flatten(nested):
+    for item in nested:
+        if isinstance(item,list):
+            yield from flatten(item)
+        else:
+            yield item
+assert list(flatten([1,[2,[3,4]],5]))==[1,2,3,4,5]
+
+print("✅ Day 26 通过！")
+'''))
+
+D.append(("Day 27 — itertools 实战", r'''
+## 📖 itertools
+```python
+import itertools
+
+# 无限迭代器
+# itertools.count(10,2) → 10,12,14,...
+# itertools.cycle("AB") → A,B,A,B,...
+
+# 排列组合
+list(itertools.permutations("AB",2))  # AB, BA
+list(itertools.combinations("ABC",2)) # AB, AC, BC
+
+# 合并
+list(itertools.chain([1,2],[3,4]))    # [1,2,3,4]
+
+# 累积
+list(itertools.accumulate([1,2,3,4])) # [1,3,6,10]
+
+# 笛卡尔积
+list(itertools.product([1,2],"ab"))   # 4种组合
+
+# 分组
+for k,g in itertools.groupby("aaabbbcc"):
+    print(k, list(g))
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+combinations: ["A","B","C","D"] 选3个 → 4种组合
+
+### 练习2
+groupby: [1,1,2,2,2,3,3,1] 连续分组
+
+### 练习3
+各用一次: accumulate, chain, product
+''', r'''
+import itertools as it
+
+# 练习1
+c=list(it.combinations(["A","B","C","D"],3))
+assert len(c)==4 and ("A","B","C") in c
+
+# 练习2
+g=[(k,list(v)) for k,v in it.groupby([1,1,2,2,2,3,3,1])]
+assert g==[(1,[1,1]),(2,[2,2,2]),(3,[3,3]),(1,[1])]
+
+# 练习3
+assert list(it.accumulate([1,2,3,4,5]))==[1,3,6,10,15]
+assert list(it.chain("AB","CD"))==['A','B','C','D']
+assert list(it.product([1,2],"ab"))==[(1,'a'),(1,'b'),(2,'a'),(2,'b')]
+
+print("✅ Day 27 通过！")
+'''))
+
+D.append(("Day 28 — JSON 与 API", r'''
+## 📖 JSON & urllib
+```python
+import json
+
+# 序列化
+data = {"name":"小明","skills":["Python","JS"]}
+j = json.dumps(data, ensure_ascii=False, indent=2)
+
+# 反序列化
+p = json.loads(j)
+print(p["name"])  # 小明
+
+# 文件读写
+with open("d.json","w") as f:
+    json.dump(data, f, ensure_ascii=False)
+
+# HTTP (urllib)
+from urllib import request
+with request.urlopen("https://httpbin.org/json") as r:
+    result = json.loads(r.read())
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+{"users":[{"id":1,"name":"A"},{"id":2,"name":"B"}]} → JSON 文件
+
+### 练习2
+读取JSON → 提取所有用户名
+
+### 练习3
+解析 {"status":"ok","data":[1,2,3]}，验证status
+''', r'''
+import json, os, tempfile
+
+# 练习1 & 2
+with tempfile.TemporaryDirectory() as tmp:
+    p = os.path.join(tmp,"u.json")
+    data = {"users":[{"id":1,"name":"Alice"},{"id":2,"name":"Bob"}]}
+    with open(p,"w") as f:
+        json.dump(data, f, ensure_ascii=False)
+    with open(p) as f:
+        loaded = json.load(f)
+    names = [u["name"] for u in loaded["users"]]
+    assert names == ["Alice","Bob"]
+
+# 练习3
+resp = json.loads('{"status":"ok","data":[1,2,3]}')
+assert resp["status"]=="ok" and resp["data"]==[1,2,3]
+
+print("✅ Day 28 通过！")
+'''))
+
+D.append(("Day 29 — 数据处理实战", r'''
+## 📖 CSV + 聚合
+```python
+import csv, io
+
+# 写入
+data = [["姓名","年龄"],["小明",25],["小红",22]]
+out = io.StringIO()
+csv.writer(out).writerows(data)
+print(out.getvalue())
+
+# DictReader
+csv_t = "姓名,年龄,工资\\nAlice,30,15000\\nBob,25,12000"
+rows = list(csv.DictReader(io.StringIO(csv_t)))
+for r in rows:
+    print(r)  # {'姓名':'Alice',...}
+```
+''', r'''
+## ✏️ 练习
+### 练习1
+解析CSV → 计算平均年龄: "姓名,年龄,工资\\nA,30,15k\\nB,25,12k\\nC,35,18k\\nD,28,14k"
+
+### 练习2
+按工资降序，前3名
+
+### 练习3
+按年龄分组(20-29/30-39)统计每组的平均工资
+''', r'''
+import csv, io
+
+csv_t = "姓名,年龄,工资\\nAlice,30,15000\\nBob,25,12000\\nCharlie,35,18000\\nDavid,28,14000"
+rows = list(csv.DictReader(io.StringIO(csv_t)))
+
+# 练习1
+ages = [int(r["年龄"]) for r in rows]
+avg_age = sum(ages)/len(ages)
+assert abs(avg_age-29.5)<0.1
+
+# 练习2
+ranked = sorted(rows, key=lambda r: int(r["工资"]), reverse=True)
+top3 = [r["姓名"] for r in ranked[:3]]
+assert top3 == ["Charlie","Alice","David"]
+
+# 练习3
+g20,g30=[],[]
+for r in rows:
+    a=int(r["年龄"]); s=int(r["工资"])
+    if 20<=a<=29: g20.append(s)
+    else: g30.append(s)
+assert len(g20)==2  # Bob, David
+assert abs(sum(g30)/2-16500)<1  # Alice, Charlie
+
+print("✅ Day 29 通过！")
+'''))
+
+D.append(("Day 30 — 综合项目", r'''
+## 📖 TODO CLI — 综合运用
+```python
+import json, os
+from datetime import datetime
+
+TODO_FILE = "todos.json"
+
+def load(): # 读取
+    return json.load(open(TODO_FILE)) if os.path.exists(TODO_FILE) else []
+
+def save(todos): # 保存
+    json.dump(todos, open(TODO_FILE,"w"), ensure_ascii=False, indent=2)
+
+def add(title):
+    todos = load()
+    todos.append({"id":len(todos)+1, "title":title, "done":False,
+                  "created":datetime.now().isoformat()})
+    save(todos)
+
+def done(tid):
+    todos = load()
+    for t in todos:
+        if t["id"]==tid:
+            t["done"]=True; save(todos)
+            return f"✅ {t['title']}"
+    return "❌ 未找到"
+```
+
+**30天知识全用上**: 变量、循环、函数、类、文件、JSON、异常、datetime!
+''', r'''
+## ✏️ 练习
+### 练习1
+完善 TODO: 加 `remove_todo(todo_id)` 删除功能
+
+### 练习2
+加 `stats()` → {total, done, pending, rate}
+
+### 练习3
+数据验证: 标题不能为空、不能重复
+''', r'''
+class TodoApp:
+    def __init__(self):
+        self.todos=[]; self._nid=1
+    def add(self, title):
+        if not title or not title.strip():
+            raise ValueError("标题不能为空")
+        if any(t["title"]==title for t in self.todos):
+            raise ValueError("标题重复")
+        self.todos.append({"id":self._nid,"title":title,"done":False})
+        self._nid+=1
+    def remove(self,tid):
+        self.todos=[t for t in self.todos if t["id"]!=tid]
+    def mark_done(self,tid):
+        for t in self.todos:
+            if t["id"]==tid: t["done"]=True; return True
+        return False
+    def stats(self):
+        total=len(self.todos)
+        done=sum(1 for t in self.todos if t["done"])
+        return {"total":total,"done":done,"pending":total-done,
+                "rate":done/total if total else 0}
+
+app=TodoApp()
+app.add("学Python"); app.add("运动"); app.add("读书")
+
+# 练习1
+app.remove(2)
+assert len(app.todos)==2
+assert "运动" not in [t["title"] for t in app.todos]
+
+# 练习2
+app.mark_done(1)
+s=app.stats()
+assert s["total"]==2 and s["done"]==1 and s["rate"]==0.5
+
+# 练习3
+try: app.add(""); assert False
+except ValueError: pass
+try: app.add("学Python"); assert False
+except ValueError: pass
+
+print("🎉 Day 30 通过！")
+print("🏆 恭喜完成 30 天 Python 核心训练！")
+print("📚 你已掌握: 变量→循环→函数→类→文件→JSON→测试→项目")
+print("🚀 下一步: 多做项目 | 看源码 | 贡献开源！")
+'''))
+
+# ===== BUILD =====
+for title, ex_md, exer_md, test_code in D:
+    cells.append(md(f"# {title}\n---"))
+    cells.append(md(ex_md))
+    cells.append(md(exer_md))
+    cells.append(code(test_code))
+
+cells.append(md("# 🏁 30 天 Python 训练完成！\n\n## 你学到了\n- ✅ 变量/字符串/数字/容器\n- ✅ 循环/推导式/条件\n- ✅ 函数/lambda/装饰器/闭包\n- ✅ 文件IO/异常/上下文管理器\n- ✅ OOP(类/继承/魔术方法)\n- ✅ 模块/包/虚拟环境\n- ✅ 测试/调试/日志\n- ✅ 迭代器/生成器/itertools\n- ✅ JSON/CSV/数据处理\n- ✅ 综合项目实战\n\n**记住: 代码量 = 成长速度 🦞**"))
+
+nb = {"nbformat":4, "nbformat_minor":5,
+      "metadata":{"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},
+                  "language_info":{"name":"python","version":"3.10"}},
+      "cells":cells}
+
+with open(OUT, "w", encoding="utf-8") as f:
+    json.dump(nb, f, ensure_ascii=False, indent=1)
+
+print(f"✅ Python Notebook: {len(cells)} cells, {os.path.getsize(OUT):,} bytes")
+print(f"   {OUT}")
