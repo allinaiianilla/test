@@ -1,0 +1,62 @@
+# 模型档案配置
+# name: 档案名（switch 时用）
+# model: 实际 API model id
+# api_key_env / base_url_env: 从环境变量读连接信息（不硬编码密钥）
+# context_window: 用于估算上下文压缩阈值
+# summary: true → 作为压缩摘要用的廉价模型
+
+models:
+  - name: gpt-4o-mini
+    model: gpt-4o-mini
+    api_key_env: OPENAI_API_KEY
+    temperature: 0.3
+    max_output_tokens: 2048
+    context_window: 128000
+    summary: true            # 压缩摘要用它（便宜）
+
+  - name: gpt-4o
+    model: gpt-4o
+    api_key_env: OPENAI_API_KEY
+    temperature: 0.3
+    max_output_tokens: 4096
+    context_window: 128000
+
+  - name: deepseek-chat
+    model: deepseek-chat
+    api_key_env: DEEPSEEK_API_KEY
+    base_url_env: DEEPSEEK_BASE_URL          # https://api.deepseek.com
+    temperature: 0.3
+    max_output_tokens: 4096
+    context_window: 64000
+
+  - name: local-vllm
+    model: default
+    api_key_env: LOCAL_LLM_API_KEY           # 本地网关可随便填
+    base_url_env: LOCAL_LLM_BASE_URL         # http://localhost:8000/v1
+    temperature: 0.3
+    max_output_tokens: 4096
+    context_window: 32000
+
+  - name: glm-4-flash
+    model: glm-4-flash
+    api_key_env: ZHIPU_API_KEY
+    base_url_env: ZHIPU_BASE_URL              # https://open.bigmodel.cn/api/paas/v4
+    temperature: 0.3
+    max_output_tokens: 2048
+    context_window: 128000
+    protocol: chat-completions                # 智谱走 CC 协议适配
+
+  - name: glm-4-plus
+    model: glm-4-plus
+    api_key_env: ZHIPU_API_KEY
+    base_url_env: ZHIPU_BASE_URL
+    temperature: 0.3
+    max_output_tokens: 4096
+    context_window: 128000
+    protocol: chat-completions
+
+# 默认模型（可用 switch_model 工具或 API 切换）
+default: glm-4-flash
+
+# 压缩摘要模型（缺省取 summary: true 的那个）
+summary_model: glm-4-flash

@@ -1,3 +1,8 @@
-.DS_Store
-Thumbs.db
-# Remote content
+__pycache__/
+*.pyc
+.pytest_cache/
+data/sessions/
+data/files/
+data/demo.db
+data/*.log
+.env
