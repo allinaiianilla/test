@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML · CSS · JS 极简学习文档</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --fg: #1a1a1a;
+    --muted: #71717a;
+    --line: #e4e4e7;
+    --accent: #2563eb;
+    --accent-soft: #eff6ff;
+    --code-bg: #18181b;
+    --code-fg: #e4e4e7;
+    --ok: #16a34a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--fg);
+    line-height: 1.7; font-size: 16px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  header { margin-bottom: 56px; }
+  h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; }
+  header p { color: var(--muted); margin-top: 8px; }
+  .tags { margin-top: 14px; display: flex; gap: 8px; }
+  .tag {
+    font-size: 12px; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); font-weight: 500;
+  }
+
+  nav.toc {
+    border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 22px; margin-bottom: 56px; background: #fff;
+  }
+  nav.toc b { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+  nav.toc ol { margin: 8px 0 0 18px; }
+  nav.toc a { color: var(--fg); text-decoration: none; }
+  nav.toc a:hover { color: var(--accent); }
+
+  section { margin-bottom: 72px; }
+  h2 {
+    font-size: 24px; margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--line); letter-spacing: -0.3px;
+  }
+  h2 .no { color: var(--accent); margin-right: 8px; font-variant-numeric: tabular-nums; }
+  h3 { font-size: 17px; margin: 28px 0 10px; }
+  p { margin-bottom: 12px; }
+  p.dim { color: var(--muted); font-size: 14px; }
+  code.inline {
+    background: #f1f1f4; padding: 2px 6px; border-radius: 5px;
+    font-size: 13.5px; font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  }
+  ul, ol { margin: 0 0 12px 22px; }
+  li { margin-bottom: 4px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0 18px; font-size: 14px; background:#fff; }
+  th, td { border: 1px solid var(--line); padding: 7px 12px; text-align: left; }
+  th { background: #f9f9fb; font-weight: 600; }
+  td code { font-size: 13px; }
+
+  /* 可运行示例 */
+  .demo { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 14px 0 26px; background: #fff; }
+  .demo-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px; background: #f9f9fb; border-bottom: 1px solid var(--line);
+  }
+  .demo-head span { font-size: 12.5px; color: var(--muted); }
+  .run-btn {
+    font-size: 12.5px; padding: 4px 14px; border: none; border-radius: 7px;
+    background: var(--accent); color: #fff; cursor: pointer; font-weight: 500;
+  }
+  .run-btn:hover { opacity: .88; }
+  .demo textarea {
+    width: 100%; min-height: 150px; border: none; outline: none; resize: vertical;
+    padding: 14px; font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 13.5px; line-height: 1.6; color: #e9e9ec;
+    background: var(--code-bg); tab-size: 2;
+  }
+  .demo iframe { width: 100%; height: 170px; border: none; border-top: 1px solid var(--line); background: #fff; }
+
+  .tip {
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    padding: 10px 16px; border-radius: 0 8px 8px 0; margin: 14px 0 22px; font-size: 14.5px;
+  }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 80px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>HTML · CSS · JS 极简学习文档</h1>
+  <p>一份文件学会前端三件套。所有示例都可以改代码、点运行、看结果。</p>
+  <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">交互式</span></div>
+</header>
+
+<nav class="toc">
+  <b>目录</b>
+  <ol>
+    <li><a href="#s1">HTML — 网页的骨架</a></li>
+    <li><a href="#s2">CSS — 网页的皮肤</a></li>
+    <li><a href="#s3">JavaScript — 网页的大脑</a></li>
+    <li><a href="#s4">三者如何协作</a></li>
+    <li><a href="#s5">下一步学什么</a></li>
+  </ol>
+</nav>
+
+<!-- ============ HTML ============ -->
+<section id="s1">
+  <h2><span class="no">01</span>HTML — 网页的骨架</h2>
+  <p>HTML（超文本标记语言）用<strong>标签</strong>描述页面里"有什么"：一个标题、一段文字、一张图片、一个按钮。</p>
+
+  <h3>最小完整页面</h3>
+  <div class="demo">
+    <div class="demo-head"><span>index.html</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>我的第一个页面</title>
+</head>
+<body>
+  <h1>你好，世界</h1>
+  <p>这是我的第一个 <b>HTML</b> 页面。</p>
+  <a href="https://developer.mozilla.org">去 MDN 学更多</a>
+</body>
+</html></textarea>
+    <iframe></iframe>
+  </div>
+
+  <h3>常用标签速查</h3>
+  <table>
+    <tr><th>标签</th><th>用途</th><th>示例</th></tr>
+    <tr><td><code>&lt;h1&gt;~&lt;h6&gt;</code></td><td>标题（1最大）</td><td><code>&lt;h1&gt;标题&lt;/h1&gt;</code></td></tr>
+    <tr><td><code>&lt;p&gt;</code></td><td>段落</td><td><code>&lt;p&gt;一段文字&lt;/p&gt;</code></td></tr>
+    <tr><td><code>&lt;a&gt;</code></td><td>链接</td><td><code>&lt;a href="网址"&gt;点我&lt;/a&gt;</code></td></tr>
+    <tr><td><code>&lt;img&gt;</code></td><td>图片（自闭合）</td><td><code>&lt;img src="a.png"&gt;</code></td></tr>
+    <tr><td><code>&lt;div&gt;</code></td><td>通用块容器</td><td><code>&lt;div&gt;…&lt;/div&gt;</code></td></tr>
+    <tr><td><code>&lt;span&gt;</code></td><td>行内容器</td><td><code>&lt;span&gt;…&lt;/span&gt;</code></td></tr>
+    <tr><td><code>&lt;ul&gt;&lt;li&gt;</code></td><td>无序列表</td><td><code>&lt;ul&gt;&lt;li&gt;项&lt;/li&gt;&lt;/ul&gt;</code></td></tr>
+    <tr><td><code>&lt;button&gt;</code></td><td>按钮</td><td><code>&lt;button&gt;提交&lt;/button&gt;</code></td></tr>
+    <tr><td><code>&lt;input&gt;</code></td><td>输入框</td><td><code>&lt;input type="text"&gt;</code></td></tr>
+  </table>
+
+  <div class="tip">💡 记忆法：<b>HTML 只管内容，不管长相</b>。"这里是个标题"是 HTML 的事，"标题是红色 32px"是 CSS 的事。</div>
+
+  <h3>表单：收集用户输入</h3>
+  <div class="demo">
+    <div class="demo-head"><span>form.html — 可直接在下方预览交互</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><form>
+  <p><label>名字：<input type="text" placeholder="请输入"></label></p>
+  <p><label>年龄：<input type="number" value="18"></label></p>
+  <p><label><input type="checkbox"> 我已阅读协议</label></p>
+  <p><button type="button">注册</button></p>
+</form></textarea>
+    <iframe></iframe>
+  </div>
+</section>
+
+<!-- ============ CSS ============ -->
+<section id="s2">
+  <h2><span class="no">02</span>CSS — 网页的皮肤</h2>
+  <p>CSS（层叠样式表）控制页面的"长相"：颜色、大小、间距、布局、动画。核心语法就一条公式：</p>
+  <div class="tip"><code class="inline">选择器 { 属性: 值; }</code> —— 选中谁，改什么，改成啥。</div>
+
+  <h3>选择器与基础样式</h3>
+  <div class="demo">
+    <div class="demo-head"><span>selector.html</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  /* 按标签选 */
+  h1 { color: #2563eb; }
+  /* 按类选（最常用） */
+  .card {
+    border: 1px solid #ddd; border-radius: 12px;
+    padding: 16px; max-width: 240px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  /* 按 id 选 */
+  #special { background: #fef9c3; }
+</style>
+<h1>选择器演示</h1>
+<div class="card">我是 .card 类</div>
+<div class="card" id="special">我有 id=special</div></textarea>
+    <iframe></iframe>
+  </div>
+
+  <h3>盒模型：一切布局的基础</h3>
+  <p>每个元素都是一个盒子：<code class="inline">content（内容）→ padding（内边距）→ border（边框）→ margin（外边距）</code>，从里到外一层套一层。</p>
+  <div class="demo">
+    <div class="demo-head"><span>box.html — 改数字看变化</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  .box {
+    width: 200px;
+    padding: 20px;      /* 内边距 */
+    border: 4px solid #2563eb;
+    margin: 24px;       /* 外边距 */
+    background: #eff6ff;
+  }
+</style>
+<div class="box">我是个盒子<br>内容区 200px 宽</div>
+<p>页面背景透出来的部分 = margin</p></textarea>
+    <iframe></iframe>
+  </div>
+
+  <h3>Flexbox：现代布局神器</h3>
+  <p>一行代码让子元素横向排列、居中、平分空间。90% 的布局用它就够。</p>
+  <div class="demo">
+    <div class="demo-head"><span>flex.html</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  .row {
+    display: flex;           /* 开启 flex */
+    gap: 12px;               /* 子元素间距 */
+    justify-content: center; /* 水平居中 */
+    align-items: center;     /* 垂直居中 */
+    height: 120px; background: #f4f4f5; border-radius: 12px;
+  }
+  .item {
+    background: #2563eb; color: #fff;
+    padding: 18px 26px; border-radius: 10px;
+  }
+</style>
+<div class="row">
+  <div class="item">A</div>
+  <div class="item">B</div>
+  <div class="item">C</div>
+</div>
+<p class="dim">试试把 justify-content 改成 space-between</p></textarea>
+    <iframe></iframe>
+  </div>
+
+  <div class="tip">💡 常用属性背这五个就够了：<b>color 文字色 / background 背景 / font-size 字号 / padding 内距 / margin 外距</b>。布局交给 flex。</div>
+</section>
+
+<!-- ============ JS ============ -->
+<section id="s3">
+  <h2><span class="no">03</span>JavaScript — 网页的大脑</h2>
+  <p>JS 让页面"活"起来：响应点击、修改内容、请求数据。它是真正的编程语言，有变量、函数、逻辑。</p>
+
+  <h3>变量、函数、事件：三样撑起 80% 的场景</h3>
+  <div class="demo">
+    <div class="demo-head"><span>counter.html — 点按钮试试</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><h2 id="num">0</h2>
+<button onclick="add(1)">+1</button>
+<button onclick="add(5)">+5</button>
+<button onclick="reset()">清零</button>
+
+<script>
+  let count = 0;                    // 变量：存状态
+
+  function add(n) {                 // 函数：封装行为
+    count = count + n;
+    document.getElementById("num")  // DOM：找到元素
+            .textContent = count;   //       改内容
+  }
+  function reset() {
+    count = 0;
+    document.getElementById("num").textContent = 0;
+  }
+</script></textarea>
+    <iframe></iframe>
+  </div>
+
+  <h3>语法速查</h3>
+  <table>
+    <tr><th>概念</th><th>写法</th><th>说明</th></tr>
+    <tr><td>变量</td><td><code>let x = 1;</code> / <code>const y = 2;</code></td><td>let 可变，const 不可变</td></tr>
+    <tr><td>字符串</td><td><code>`你好 ${name}`</code></td><td>模板字符串，${} 里放变量</td></tr>
+    <tr><td>条件</td><td><code>if (a > b) {…} else {…}</code></td><td>分支逻辑</td></tr>
+    <tr><td>循环</td><td><code>for (let i = 0; i &lt; 5; i++) {…}</code></td><td>重复执行</td></tr>
+    <tr><td>数组</td><td><code>const arr = [1, 2, 3]</code></td><td>arr.push(4) 添加</td></tr>
+    <tr><td>对象</td><td><code>const user = { name: "张三" }</code></td><td>user.name 取值</td></tr>
+    <tr><td>函数</td><td><code>function f(x) { return x*2 }</code></td><td>或箭头函数 <code>x =&gt; x*2</code></td></tr>
+    <tr><td>找元素</td><td><code>document.querySelector(".box")</code></td><td>CSS 选择器语法</td></tr>
+    <tr><td>监听事件</td><td><code>el.addEventListener("click", fn)</code></td><td>比 onclick 属性更推荐</td></tr>
+    <tr><td>改样式</td><td><code>el.style.color = "red"</code></td><td>或改 class：<code>el.classList.toggle("on")</code></td></tr>
+  </table>
+
+  <h3>综合小例子：待办清单</h3>
+  <div class="demo">
+    <div class="demo-head"><span>todo.html — HTML 结构 + CSS 样式 + JS 逻辑</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  body { font-family: sans-serif; padding: 16px; }
+  .todo { max-width: 300px; }
+  .todo input { padding: 8px; width: 65%; border: 1px solid #ddd; border-radius: 8px; }
+  .todo button { padding: 8px 14px; border: none; background: #2563eb; color: #fff; border-radius: 8px; cursor: pointer; }
+  li { padding: 6px 0; border-bottom: 1px solid #eee; cursor: pointer; }
+  li.done { color: #aaa; text-decoration: line-through; }
+</style>
+<div class="todo">
+  <input id="inp" placeholder="想做什么？">
+  <button onclick="addItem()">添加</button>
+  <ul id="list"></ul>
+</div>
+<script>
+  function addItem() {
+    const inp = document.getElementById("inp");
+    if (!inp.value.trim()) return;
+    const li = document.createElement("li");
+    li.textContent = inp.value;
+    li.onclick = () => li.classList.toggle("done");  // 点击划掉
+    document.getElementById("list").appendChild(li);
+    inp.value = "";
+  }
+</script></textarea>
+    <iframe></iframe>
+  </div>
+</section>
+
+<!-- ============ 协作 ============ -->
+<section id="s4">
+  <h2><span class="no">04</span>三者如何协作</h2>
+  <p>一个网页 = 房子：HTML 是<b>毛坯结构</b>，CSS 是<b>装修</b>，JS 是<b>水电和智能设备</b>。分工明确，各改各的，互不干扰。</p>
+  <table>
+    <tr><th></th><th>管什么</th><th>文件</th><th>一句话</th></tr>
+    <tr><td>HTML</td><td>结构与内容</td><td>.html</td><td>页面上有什么</td></tr>
+    <tr><td>CSS</td><td>外观与布局</td><td>.css</td><td>长什么样</td></tr>
+    <tr><td>JS</td><td>行为与交互</td><td>.js</td><td>能做什么</td></tr>
+  </table>
+  <p>实际项目里三者分三个文件，用两行代码关联：</p>
+  <div class="tip">
+    <code class="inline">&lt;link rel="stylesheet" href="style.css"&gt;</code>（放 head 里）<br>
+    <code class="inline">&lt;script src="app.js"&gt;&lt;/script&gt;</code>（放 body 最底部）
+  </div>
+</section>
+
+<!-- ============ 下一步 ============ -->
+<section id="s5">
+  <h2><span class="no">05</span>下一步学什么</h2>
+  <ol>
+    <li><b>动手改这个文档</b> —— 每个示例都改一遍参数，看效果变化，比看十遍都有用</li>
+    <li><b>做一个个人主页</b> —— 综合运用三件套的最小实战</li>
+    <li><b>学 Chrome DevTools</b> —— F12 打开，随时偷看任何网站的代码</li>
+    <li><b>MDN Web Docs</b> —— 前端界的官方字典：<code>developer.mozilla.org</code></li>
+    <li>之后再进阶：Fetch/API 请求 → ES6+ 语法 → Vue / React 框架</li>
+  </ol>
+</section>
+
+<footer>极简学习文档 · 修改即用 · 也可以保存为 .html 直接双击打开</footer>
+</div>
+
+<script>
+  // 给每个 demo 绑定"运行"：把 textarea 内容写进下方 iframe
+  document.querySelectorAll(".demo").forEach(demo => {
+    const ta = demo.querySelector("textarea");
+    const frame = demo.querySelector("iframe");
+    const btn = demo.querySelector(".run-btn");
+    const run = () => {
+      frame.srcdoc = ta.value;
+      // 高度自适应
+      setTimeout(() => {
+        try {
+          const h = frame.contentDocument.body.scrollHeight + 24;
+          frame.style.height = Math.min(Math.max(h, 80), 520) + "px";
+        } catch (e) {}
+      }, 60);
+    };
+    btn.addEventListener("click", run);
+    run(); // 初次渲染
+  });
+</script>
+</body>
+</html>
