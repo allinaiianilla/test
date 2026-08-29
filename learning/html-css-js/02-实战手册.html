@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML · CSS · JS 实战手册 —— 跟着做项目</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #171a21; --panel2: #1d212b;
+    --fg: #e6e8ee; --muted: #8b93a7; --line: #2a2f3a;
+    --green: #34d399; --green-soft: rgba(52,211,153,.12);
+    --amber: #fbbf24; --code-bg: #10131a; --code-fg: #dfe3ec;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--fg); line-height: 1.75; font-size: 15.5px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 44px 20px 100px; }
+  header { margin-bottom: 44px; }
+  .kicker { color: var(--green); font-size: 13px; letter-spacing: 2px; font-weight: 600; }
+  h1 { font-size: 32px; font-weight: 800; letter-spacing: -.5px; margin-top: 6px; }
+  header p { color: var(--muted); margin-top: 10px; }
+
+  .levels { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 28px 0 56px; }
+  .lv {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px 18px; text-decoration: none; color: var(--fg); display: block;
+    transition: border-color .2s;
+  }
+  .lv:hover { border-color: var(--green); }
+  .lv b { display: block; font-size: 16px; }
+  .lv span { color: var(--muted); font-size: 13px; }
+  .lv .n { color: var(--green); font-weight: 800; margin-right: 6px; }
+
+  section { margin-bottom: 84px; }
+  h2 { font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: -.3px; }
+  h2 .lv-tag {
+    font-size: 12px; vertical-align: middle; margin-left: 10px; padding: 3px 10px;
+    border-radius: 999px; background: var(--green-soft); color: var(--green); font-weight: 600;
+  }
+  .goal { color: var(--muted); margin-bottom: 22px; }
+  .goal b { color: var(--fg); }
+
+  .step { display: flex; gap: 12px; margin: 20px 0 6px; align-items: baseline; }
+  .step .no {
+    flex: 0 0 26px; height: 26px; border-radius: 8px; background: var(--green-soft);
+    color: var(--green); font-weight: 700; font-size: 13px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .step b { font-size: 16.5px; }
+  p { margin-bottom: 12px; }
+  code.inline {
+    background: var(--panel2); padding: 2px 7px; border-radius: 6px;
+    font-size: 13.5px; font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    color: var(--amber);
+  }
+
+  .demo { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 12px 0 30px; background: var(--panel); }
+  .demo-head { display:flex; justify-content:space-between; align-items:center; padding: 9px 16px; background: var(--panel2); border-bottom: 1px solid var(--line); }
+  .demo-head span { font-size: 12.5px; color: var(--muted); font-family: ui-monospace, monospace; }
+  .run-btn {
+    font-size: 12.5px; padding: 5px 16px; border: 1px solid var(--green); border-radius: 8px;
+    background: transparent; color: var(--green); cursor: pointer; font-weight: 600;
+  }
+  .run-btn:hover { background: var(--green); color: #0f1115; }
+  .demo textarea {
+    width: 100%; min-height: 170px; border: none; outline: none; resize: vertical;
+    padding: 15px; font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 13px; line-height: 1.65; background: var(--code-bg); color: var(--code-fg); tab-size: 2;
+  }
+  .demo iframe { width: 100%; height: 190px; border: none; border-top: 1px solid var(--line); background: #fff; display: block; }
+
+  .pit {
+    background: rgba(251,191,36,.08); border-left: 3px solid var(--amber);
+    padding: 10px 16px; border-radius: 0 10px 10px 0; margin: 12px 0 24px; font-size: 14px;
+  }
+  .pit b { color: var(--amber); }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 70px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">实战手册 · 第二套</div>
+  <h1>HTML · CSS · JS 实战手册</h1>
+  <p>不背语法，直接做三个项目。每个项目从零开始、分步搭建、随改随看。<br>建议先过一遍《极简学习文档》再来，或者直接开干也行。</p>
+</header>
+
+<nav class="levels">
+  <a class="lv" href="#p1"><b><span class="n">Ⅰ</span>个人名片页</b><span>HTML 结构 + CSS 美化 · 10 分钟</span></a>
+  <a class="lv" href="#p2"><b><span class="n">Ⅱ</span>互动问答卡片</b><span>JS 逻辑 + 事件 · 15 分钟</span></a>
+  <a class="lv" href="#p3"><b><span class="n">Ⅲ</span>记账小应用</b><span>三者综合 + 数据持久化 · 25 分钟</span></a>
+</nav>
+
+<!-- ================= 项目一 ================= -->
+<section id="p1">
+  <h2>项目Ⅰ · 个人名片页 <span class="lv-tag">入门</span></h2>
+  <p class="goal">目标：一个居中、带头像、有社交按钮的卡片页面。学会 <b>HTML 搭结构 → CSS 排版 → hover 交互</b>。</p>
+
+  <div class="step"><span class="no">1</span><b>先写骨架：只管内容，不看好坏</b></div>
+  <div class="demo">
+    <div class="demo-head"><span>step1 — 裸结构</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><div class="card">
+  <img class="avatar" src="https://api.dicebear.com/9.x/fun-emoji/svg?seed=leo" alt="头像">
+  <h1>李小明</h1>
+  <p class="job">前端学习者 · 北京</p>
+  <p class="bio">正在学 HTML/CSS/JS，目标半年内做出自己的网站。</p>
+  <div class="links">
+    <a href="#">GitHub</a>
+    <a href="#">博客</a>
+    <a href="#">邮箱</a>
+  </div>
+</div></textarea>
+    <iframe></iframe>
+  </div>
+  <div class="pit"><b>现在很丑，正常。</b>先保证内容对、层级清，再动手美化——这是专业前端的工作顺序。</div>
+
+  <div class="step"><span class="no">2</span><b>加 CSS：居中卡片 + 圆头像</b></div>
+  <div class="demo">
+    <div class="demo-head"><span>step2 — 有了设计感</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  body {
+    min-height: 100vh; display: flex;           /* 用 flex 把卡片推到屏幕正中 */
+    align-items: center; justify-content: center;
+    background: #0f172a; font-family: sans-serif;
+  }
+  .card {
+    background: #fff; padding: 32px 36px; border-radius: 20px;
+    text-align: center; max-width: 320px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  }
+  .avatar {
+    width: 88px; height: 88px; border-radius: 50%;  /* 圆头像 */
+    border: 3px solid #38bdf8;
+  }
+  h1 { font-size: 22px; margin: 12px 0 2px; color: #0f172a; }
+  .job { color: #64748b; font-size: 13.5px; margin-bottom: 12px; }
+  .bio { color: #334155; font-size: 14px; line-height: 1.7; }
+</style>
+<div class="card">
+  <img class="avatar" src="https://api.dicebear.com/9.x/fun-emoji/svg?seed=leo" alt="头像">
+  <h1>李小明</h1>
+  <p class="job">前端学习者 · 北京</p>
+  <p class="bio">正在学 HTML/CSS/JS，目标半年内做出自己的网站。</p>
+  <div class="links">
+    <a href="#">GitHub</a> · <a href="#">博客</a> · <a href="#">邮箱</a>
+  </div>
+</div></textarea>
+    <iframe></iframe>
+  </div>
+
+  <div class="step"><span class="no">3</span><b>加交互：hover 悬停效果 + 按钮化链接</b></div>
+  <div class="demo">
+    <div class="demo-head"><span>step3 — 最终成品（改文字换成你自己的）</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  body { min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background: linear-gradient(135deg,#0f172a,#1e293b); font-family: sans-serif; }
+  .card { background:#fff; padding:34px 38px; border-radius:22px; text-align:center;
+          max-width:330px; box-shadow:0 24px 60px rgba(0,0,0,.4);
+          transition: transform .25s; }
+  .card:hover { transform: translateY(-6px); }          /* 整卡上浮 */
+  .avatar { width:88px; height:88px; border-radius:50%; border:3px solid #38bdf8;
+            transition: transform .3s; }
+  .avatar:hover { transform: scale(1.08) rotate(4deg); } /* 头像放大微转 */
+  h1 { font-size:22px; margin:12px 0 2px; color:#0f172a; }
+  .job { color:#64748b; font-size:13.5px; margin-bottom:14px; }
+  .bio { color:#334155; font-size:14px; line-height:1.7; margin-bottom:18px; }
+  .links a {
+    display:inline-block; margin:0 5px; padding:7px 16px;
+    background:#f1f5f9; color:#0f172a; border-radius:999px;
+    text-decoration:none; font-size:13px; font-weight:600;
+    transition: all .2s;
+  }
+  .links a:hover { background:#0f172a; color:#fff; transform: translateY(-2px); }
+</style>
+<div class="card">
+  <img class="avatar" src="https://api.dicebear.com/9.x/fun-emoji/svg?seed=leo" alt="头像">
+  <h1>李小明</h1>
+  <p class="job">前端学习者 · 北京</p>
+  <p class="bio">正在学 HTML/CSS/JS，<br>目标半年内做出自己的网站。</p>
+  <div class="links">
+    <a href="#">GitHub</a><a href="#">博客</a><a href="#">邮箱</a>
+  </div>
+</div></textarea>
+    <iframe></iframe>
+  </div>
+  <div class="pit"><b>挑战：</b>把头像换成你自己的图片链接，把 <code class="inline">linear-gradient(135deg,#0f172a,#1e293b)</code> 改成你喜欢的两个颜色，体验"改两个值→整体换风格"。</div>
+</section>
+
+<!-- ================= 项目二 ================= -->
+<section id="p2">
+  <h2>项目Ⅱ · 互动问答卡片 <span class="lv-tag">进阶</span></h2>
+  <p class="goal">目标：一道选择判断题，点选项立即判对错、计分、下一题。学会 <b>JS 数据驱动界面</b>——先有数据，再渲染，事件只改数据。</p>
+
+  <div class="step"><span class="no">1</span><b>思路：题目是数据，界面是数据的影子</b></div>
+  <p>不要想着"点按钮改页面"，而要想："点按钮改数据（第几题/得分），数据变了重新画一遍界面"。这是现代前端的核心理念，Vue/React 都是这个思想的框架化。</p>
+
+  <div class="step"><span class="no">2</span><b>完整实现（60 行，建议逐段读懂再运行）</b></div>
+  <div class="demo">
+    <div class="demo-head"><span>quiz.html — 数据驱动 UI</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  body { font-family:sans-serif; background:#f8fafc; display:flex;
+         justify-content:center; padding:30px 16px; }
+  .quiz { background:#fff; border-radius:18px; padding:26px;
+          max-width:380px; width:100%; box-shadow:0 8px 30px rgba(0,0,0,.08); }
+  .progress { font-size:12.5px; color:#94a3b8; margin-bottom:8px; }
+  .q { font-size:17px; font-weight:700; color:#0f172a; margin-bottom:16px; }
+  .opt {
+    display:block; width:100%; text-align:left; padding:12px 16px; margin-bottom:10px;
+    border:1.5px solid #e2e8f0; background:#fff; border-radius:12px;
+    font-size:14.5px; cursor:pointer; transition: all .15s;
+  }
+  .opt:hover { border-color:#38bdf8; background:#f0f9ff; }
+  .opt.right { border-color:#22c55e; background:#f0fdf4; }
+  .opt.wrong { border-color:#ef4444; background:#fef2f2; }
+  .result { text-align:center; padding:20px 0; }
+  .score { font-size:42px; font-weight:800; color:#0f172a; }
+</style>
+<div class="quiz" id="app"></div>
+<script>
+  // ① 数据：题目列表（想加题就在这里加）
+  const questions = [
+    { q: "HTML 的中文全称是？",
+      opts: ["超文本标记语言", "高级文本语言", "超媒体语言"], answer: 0 },
+    { q: "CSS 中让文字变红色，正确的是？",
+      opts: ["color: red;", "text-color: red;", "font-color: red;"], answer: 0 },
+    { q: "JS 里声明一个不能重新赋值的变量用？",
+      opts: ["let", "const", "var"], answer: 1 },
+    { q: "让三个盒子横向排列，最常用？",
+      opts: ["display: flex", "display: block", "float: top"], answer: 0 },
+  ];
+
+  // ② 状态：当前第几题、得了几分
+  let idx = 0, score = 0;
+  const app = document.getElementById("app");
+
+  // ③ 渲染：把当前状态画成界面
+  function render() {
+    if (idx >= questions.length) return renderResult();
+    const cur = questions[idx];
+    app.innerHTML = `
+      <div class="progress">第 ${idx+1} / ${questions.length} 题</div>
+      <div class="q">${cur.q}</div>
+      ${cur.opts.map((o, i) =>
+        `<button class="opt" onclick="pick(${i})">${"ABC"[i]}. ${o}</button>`).join("")}`;
+  }
+
+  // ④ 事件：只改数据，然后重新渲染
+  function pick(i) {
+    const right = questions[idx].answer;
+    // 给用户看对错反馈
+    app.querySelectorAll(".opt")[i]
+       .classList.add(i === right ? "right" : "wrong");
+    if (i === right) score++;
+    // 禁止再点，稍后下一题
+    app.querySelectorAll(".opt").forEach(b => b.disabled = true);
+    setTimeout(() => { idx++; render(); }, 700);
+  }
+
+  function renderResult() {
+    app.innerHTML = `
+      <div class="result">
+        <div class="score">${score} / ${questions.length}</div>
+        <p style="color:#64748b">${score === questions.length ? "满分！前端之神 🏆" : "再刷一遍就熟了 💪"}</p>
+        <button class="opt" style="text-align:center" onclick="idx=0;score=0;render()">再来一次</button>
+      </div>`;
+  }
+
+  render();  // 启动
+</script></textarea>
+    <iframe></iframe>
+  </div>
+  <div class="pit"><b>关键洞察：</b><code class="inline">render()</code> 是唯一碰界面的函数，事件函数只改 <code class="inline">idx / score</code>。以后学 Vue，会发现它就是把 <code class="inline">render</code> 自动化了。</div>
+  <div class="pit"><b>挑战：</b>加两道自己的题；把答错扣分做成双倍计分；给进度条加个 <code class="inline">&lt;progress&gt;</code> 标签。</div>
+</section>
+
+<!-- ================= 项目三 ================= -->
+<section id="p3">
+  <h2>项目Ⅲ · 记账小应用 <span class="lv-tag">综合</span></h2>
+  <p class="goal">目标：输入金额和备注，记录收支、自动算总额、<b>刷新页面数据不丢</b>。学会 <b>localStorage 持久化 + 列表渲染 + 汇总计算</b>——这就是一个真正的应用。</p>
+
+  <div class="demo">
+    <div class="demo-head"><span>bills.html — 关掉再打开，数据还在</span><button class="run-btn">▶ 运行</button></div>
+    <textarea spellcheck="false"><style>
+  body { font-family:sans-serif; background:#f1f5f9; display:flex; justify-content:center; padding:26px 14px; }
+  .app { background:#fff; border-radius:18px; padding:22px; width:100%; max-width:360px;
+         box-shadow:0 10px 34px rgba(0,0,0,.1); }
+  h1 { font-size:19px; color:#0f172a; }
+  .balance { font-size:34px; font-weight:800; color:#0f172a; margin:4px 0 14px; }
+  .balance.negative { color:#ef4444; }
+  form { display:flex; gap:8px; margin-bottom:16px; }
+  input, select { padding:9px 10px; border:1.5px solid #e2e8f0; border-radius:10px; font-size:14px; }
+  input[name=note] { flex:1; }
+  input[name=amount] { width:86px; }
+  button.add { padding:9px 16px; border:none; border-radius:10px;
+               background:#0f172a; color:#fff; font-weight:600; cursor:pointer; }
+  .item { display:flex; justify-content:space-between; align-items:center;
+          padding:9px 2px; border-bottom:1px solid #f1f5f9; font-size:14px; }
+  .item .amt { font-weight:700; font-variant-numeric: tabular-nums; }
+  .item .amt.plus { color:#16a34a; } .item .amt.minus { color:#ef4444; }
+  .del { border:none; background:none; color:#cbd5e1; cursor:pointer; font-size:15px; }
+  .del:hover { color:#ef4444; }
+  .empty { color:#94a3b8; text-align:center; padding:18px 0; font-size:13.5px; }
+</style>
+<div class="app">
+  <h1>💰 我的记账本</h1>
+  <div class="balance" id="balance">￥0.00</div>
+  <form id="form">
+    <input name="note" placeholder="备注：如 奶茶" required>
+    <input name="amount" type="number" step="0.01" placeholder="金额" required>
+    <select name="type">
+      <option value="minus">支出</option>
+      <option value="plus">收入</option>
+    </select>
+    <button class="add" type="submit">+</button>
+  </form>
+  <div id="list"></div>
+</div>
+<script>
+  // ① 数据层：读写 localStorage（浏览器自带的本地存储）
+  const KEY = "my_bills";
+  const load = () => JSON.parse(localStorage.getItem(KEY) || "[]");
+  const save = (list) => localStorage.setItem(KEY, JSON.stringify(list));
+
+  // ② 渲染：列表 + 余额
+  function render() {
+    const list = load();
+    const ul = document.getElementById("list");
+    if (!list.length) {
+      ul.innerHTML = '<div class="empty">还没有记录，先记一笔吧</div>';
+    } else {
+      ul.innerHTML = list.map((b, i) => `
+        <div class="item">
+          <span>${b.note}</span>
+          <span class="amt ${b.type}">${b.type === "plus" ? "+" : "-"}${Math.abs(b.amount).toFixed(2)}
+            <button class="del" onclick="del(${i})">✕</button></span>
+        </div>`).join("");
+    }
+    // 余额 = 收入 - 支出
+    const total = list.reduce((s, b) => s + (b.type === "plus" ? b.amount : -b.amount), 0);
+    const el = document.getElementById("balance");
+    el.textContent = "￥" + total.toFixed(2);
+    el.classList.toggle("negative", total < 0);
+  }
+
+  // ③ 事件：提交表单 → 改数据 → 重渲染
+  document.getElementById("form").addEventListener("submit", (e) => {
+    e.preventDefault();                                  // 拦截默认提交刷新
+    const f = e.target;
+    const amount = parseFloat(f.amount.value);
+    if (isNaN(amount) || amount <= 0) return;
+    const list = load();
+    list.unshift({ note: f.note.value || "未命名", amount, type: f.type.value, time: Date.now() });
+    save(list);
+    f.reset();                                           // 清空输入框
+    render();
+  });
+
+  function del(i) {
+    const list = load();
+    list.splice(i, 1);
+    save(list);
+    render();
+  }
+
+  render();  // 启动（页面刷新时自动恢复数据）
+</script></textarea>
+    <iframe></iframe>
+  </div>
+
+  <div class="pit"><b>三个新知识点：</b><br>
+    ① <code class="inline">localStorage</code>：浏览器自带的键值数据库，<code class="inline">setItem / getItem</code>，存的是字符串所以要 <code class="inline">JSON.stringify / parse</code><br>
+    ② <code class="inline">reduce</code>：把数组折叠成一个值，算余额一行搞定<br>
+    ③ <code class="inline">e.preventDefault()</code>：阻止表单默认行为（否则页面会刷新，数据状态全丢）
+  </div>
+  <div class="pit"><b>毕业挑战：</b>① 按日期分组显示 ② 加一个"清空全部"按钮（记得二次确认）③ 把每笔记录加上时间显示。做完这三个，你就超过大部分初学者了。</div>
+</section>
+
+<footer>实战手册 · 做完三个项目 ≈ 入门完成 · 配合《极简学习文档》查漏补缺</footer>
+</div>
+
+<script>
+  document.querySelectorAll(".demo").forEach(demo => {
+    const ta = demo.querySelector("textarea");
+    const frame = demo.querySelector("iframe");
+    const run = () => {
+      frame.srcdoc = ta.value;
+      setTimeout(() => {
+        try {
+          const h = frame.contentDocument.body.scrollHeight + 26;
+          frame.style.height = Math.min(Math.max(h, 120), 560) + "px";
+        } catch (e) {}
+      }, 80);
+    };
+    demo.querySelector(".run-btn").addEventListener("click", run);
+    run();
+  });
+</script>
+</body>
+</html>
